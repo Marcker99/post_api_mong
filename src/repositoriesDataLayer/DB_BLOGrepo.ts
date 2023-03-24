@@ -4,7 +4,7 @@ export const blogDataRepositories =  {
 
 //get all
     async readAllBlog():Promise<Array<blogObj>> {
-        return await blogsCollection.find().toArray()   //!!!
+        return await blogsCollection.find({projection:{_id:0}}).toArray()   //!!!
 
     },
 
@@ -30,7 +30,7 @@ export const blogDataRepositories =  {
             createdAt: new Date().toISOString(),
             isMembership: false
         }
-            blogsCollection.insertOne(newBlog)
+            await blogsCollection.insertOne(newBlog)
             return newBlog
 
 
