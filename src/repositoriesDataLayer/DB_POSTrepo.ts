@@ -1,4 +1,4 @@
-import {blogDB} from "./local_data/BLOGrepo";
+
 import {blogsCollection, postCollection, postObj} from "./db";
 
 export const postDataRepositories = {
@@ -47,7 +47,7 @@ export const postDataRepositories = {
                 content: newPost.content,
                 blogId: newPost.blogId,
                 blogName: newPost.blogName,
-                createdAt: newPost.blogName
+                createdAt: newPost.createdAt
             }
         },
 //update
