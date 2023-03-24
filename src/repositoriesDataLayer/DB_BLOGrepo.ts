@@ -11,7 +11,7 @@ export const blogDataRepositories =  {
 //find by id
     async readBlogById(id: string):Promise<blogObj | null> {
 
-        const foundObject: blogObj | null = await blogsCollection.findOne({id:id})
+        const foundObject: blogObj | null = await blogsCollection.findOne({id:id},{projection:{_id:0}})
         return foundObject ? foundObject : null;
     },
 //delete
