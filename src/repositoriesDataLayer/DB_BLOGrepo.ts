@@ -30,8 +30,8 @@ export const blogDataRepositories =  {
             createdAt: new Date().toISOString(),
             isMembership: false
         }
-            await blogsCollection.insertOne(newBlog)
-            return newBlog
+        await blogsCollection.insertOne(newBlog)
+        return newBlog
 
 
     },
