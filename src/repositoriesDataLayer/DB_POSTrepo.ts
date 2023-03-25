@@ -4,14 +4,12 @@ import {blogsCollection, postCollection, postObj} from "./db";
 export const postDataRepositories = {
 //get all
     async readAllPost():Promise<postObj[]> {
-        const answer = postCollection.find({projection:{_id:0}}).toArray()
-        return answer
-    },
+        return  postCollection.find({},{projection:{_id:0}}).toArray()
+        },
 //  get by id
 
     async readPostById(id: string):Promise<postObj | null> {
-        const answer = await postCollection.findOne({id:id},{projection:{_id:0}})
-        return answer
+       return  postCollection.findOne({id:id},{projection:{_id:0}})
     },
 //delete by id
     async removePostById(id: string ): Promise<boolean> {

@@ -1,10 +1,10 @@
-import {blogObj, blogsCollection, client} from "./db";
+import {blogObj, blogsCollection} from "./db";
 
 export const blogDataRepositories =  {
 
 //get all
     async readAllBlog():Promise<Array<blogObj>> {
-        return await blogsCollection.find({projection:{_id:0}}).toArray()   //!!!
+        return blogsCollection.find({},{projection:{_id:0}}).toArray()   //!!!
 
     },
 
