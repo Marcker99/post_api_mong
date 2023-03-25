@@ -33,6 +33,7 @@ postRoutes.get('/:id',async (req: Request, res: Response) => {
     let answer = await postDataRepositories.readPostById(req.params.id)
     if (!answer) {
         res.sendStatus(404)
+        return
     }
     res.send(answer)
 
@@ -53,8 +54,6 @@ postRoutes.put('/:id',
       } else {
           res.send(404)
       }
-
-
     })
 //delete by id
 

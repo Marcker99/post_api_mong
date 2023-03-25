@@ -17,7 +17,7 @@ export const blogDataRepositories =  {
 //delete
     async removeBlogById(id: string ):Promise<boolean> {
         const res = await blogsCollection.deleteOne({id:id})
-                return res.deletedCount === 1
+        return res.deletedCount === 1
     },
 
     async createNewBlog(name:string,description:string,webUrl:string):Promise<blogObj>{

@@ -22,14 +22,13 @@ blogsRoutes.post('/',
     async (req: Request, res: Response) => {
         const newBlog = await blogDataRepositories.createNewBlog(req.body.name, req.body.description, req.body.websiteUrl)
         res.status(201).send(newBlog)
-
-
     })
 //get by id
 blogsRoutes.get('/:id',async (req: Request, res: Response) => {
     let answer = await blogDataRepositories.readBlogById(req.params.id.toString())
     if (!answer) {
         res.sendStatus(404)
+        return
     }
     res.send(answer)
 })
