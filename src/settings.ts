@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import {blogsRoutes} from "./routes/blogs-routes";
 import {postRoutes} from "./routes/post-routes";
 import {clearRout} from "./routes/clearDB";
@@ -13,3 +13,6 @@ app.use('/posts',postRoutes)
 
 //test/////////////////////////////////////////
 app.use('/testing',clearRout)
+app.get('/', (req: Request, res: Response) => {
+    res.send('Hello world!')
+})
