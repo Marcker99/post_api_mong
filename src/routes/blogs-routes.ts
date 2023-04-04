@@ -25,12 +25,12 @@ blogsRoutes.post('/',
     })
 //get by id
 blogsRoutes.get('/:id', async (req: Request, res: Response) => {
-    let answer = await blogDataRepositories.readBlogById(req.params.id.toString())
-    if (!answer) {
+    let result = await blogDataRepositories.readBlogById(req.params.id.toString())
+    if (!result) {
         res.sendStatus(404)
         return
     }
-    res.send(answer)
+    res.send(result)
 })
 
 
@@ -45,9 +45,9 @@ blogsRoutes.put('/:id',
         const answer = await blogDataRepositories.updateBlog(req.params.id, req.body.name,
             req.body.description, req.body.websiteUrl)
         if (answer) {
-            res.send(204)
+            res.sendStatus(204)
         } else {
-            res.send(404)
+            res.sendStatus(404)
         }
     })
 
@@ -55,7 +55,7 @@ blogsRoutes.put('/:id',
 //delete by id
 blogsRoutes.delete('/:id', authMiddleWare, async (req: Request, res: Response) => {
     const answer = await blogDataRepositories.removeBlogById(req.params.id.toString()) //toString?
-    answer ? res.send(204) : res.send(404)
+    answer ? res.sendStatus(204) : res.sendStatus(404)
 })
 //
 

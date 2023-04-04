@@ -7,7 +7,7 @@ const authPass: string = `Basic ${startPass}`
 
 export const authMiddleWare = (req: Request, res: Response, next: NextFunction) => {
     if (!req.headers.authorization || req.headers.authorization !== authPass) {
-        res.send(401)
+        res.sendStatus(401)
         return
     }
     next()

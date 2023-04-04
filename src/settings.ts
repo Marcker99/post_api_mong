@@ -14,5 +14,5 @@ app.use('/posts',postRoutes)
 //test/////////////////////////////////////////
 app.use('/testing',clearRout)
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello world!')
+    res.send('Hello world!') //test for vercel
 })

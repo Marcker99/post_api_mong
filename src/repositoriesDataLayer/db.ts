@@ -1,23 +1,32 @@
-import {MongoClient} from 'mongodb' //
+import {MongoClient, ObjectId} from 'mongodb' //
 import dotenv from 'dotenv' //env
 dotenv.config() //env ?init
 const mongoURI = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017'
 export const client = new MongoClient(mongoURI) //switch db
-export async function runDb(){
+export async function runDb(){ //<- put starting db to function
     try {
         await client.connect() // connect to db
-        await client.db("HWdb").command({ping: 1});
-        console.log("connected success")
+        await client.db("HWdb").command({ping: 1}); //ping
+        console.log("connected success") //check connect
     } catch {
         console.log("can't connect");
-        await client.close //
+        await client.close //if err disconnect
     }
 
 }
-export const dbBlog_Post = client.db('HWdb')
+export const dbBlog_Post = client.db('HWdb') //made short
 
 //BLOG
-export type blogObj = {
+
+export type BlogDbType = {
+    name: string;
+    description:string;
+    websiteUrl:string;
+    createdAt:string;
+    isMembership:boolean;
+}
+
+export type BlogViewType = {
     id: string,
     name: string;
     description:string;
@@ -25,7 +34,9 @@ export type blogObj = {
     createdAt:string;
     isMembership:boolean;
 }
-export const blogsCollection = client.db('HWdb').collection<blogObj> ('blogs')
+export const ViewBlogsCollection = client.db('HWdb').collection<BlogViewType> ('blogs') //full
+
+export const blogsCollection = client.db('HWdb').collection<BlogDbType> ('blogs')
 
 
 
@@ -40,4 +51,4 @@ export type postObj = {
     createdAt:string;
 
 }
-export const postCollection = dbBlog_Post.collection<postObj>('posts')
+export const postCollection = dbBlog_Post.collection<postObj>('posts') // short

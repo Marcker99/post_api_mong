@@ -1,5 +1,5 @@
 import {body} from "express-validator";
-import {blogsCollection} from "../../repositoriesDataLayer/db";
+import {ViewBlogsCollection} from "../../repositoriesDataLayer/db";
 export const checkTitle = body('title')
     .notEmpty()
     .withMessage({
@@ -74,7 +74,7 @@ export const checkBlogId = body('blogId')
     })
     .bail()
     .custom(async (value, { req }) => {
-        const blogIdValue = await blogsCollection.findOne({id:value})
+        const blogIdValue = await ViewBlogsCollection.findOne({id:value})
         if (!blogIdValue) {
             throw new Error();
         }

@@ -1,5 +1,5 @@
 
-import {blogsCollection, postCollection, postObj} from "./db";
+import {ViewBlogsCollection, postCollection, postObj} from "./db";
 
 export const postDataRepositories = {
 //get all
@@ -20,7 +20,7 @@ export const postDataRepositories = {
 //create
     async createNewPost(title:string,shortDescription:string,content:string,blogId:string):Promise<postObj>{
         //?
-            const findBlogName = await blogsCollection.findOne({id:blogId})
+            const findBlogName = await ViewBlogsCollection.findOne({id:blogId})
             let blogName:string
             if(!findBlogName){
                 blogName = "not fined"
