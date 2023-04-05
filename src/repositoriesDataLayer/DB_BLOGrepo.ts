@@ -1,6 +1,16 @@
 import {BlogDbType, blogsCollection, BlogViewType, ViewBlogsCollection} from "./db";
 import {ObjectId, WithId} from "mongodb";
 
+function mapBlogToBlogView(blog: BlogDbType): BlogViewType {
+    return { id: blog._id.toString(),name: blog.name,description: blog.description,websiteUrl: blog.websiteUrl,
+    createdAt: blog.createdAt,isMembership: blog.isMembership }
+}
+
+
+
+
+
+
 export const blogDataRepositories =  {
 
 //get all
@@ -11,16 +21,16 @@ export const blogDataRepositories =  {
 
 //find by id
     async readBlogById(id: string):Promise<BlogViewType | null> {
-      const isIdValid = ObjectId.isValid(id)
+      const isIdValid = ObjectId.isValid(id) //ask gpt
         if(!isIdValid) {
             return null
         }
-        const foundObject: BlogViewType | null =  await ViewBlogsCollection.findOne({_id: new ObjectId(id)},)
-        return foundObject ? foundObject : null;
+        const foundObject: BlogDbType | null =  await ViewBlogsCollection.findOne({_id: new ObjectId(id)}) //!
+        return foundObject ?  mapBlogToBlogView(foundObject) : null;
     },
 //delete
     async removeBlogById(id: string ):Promise<boolean> {
-        const res = await ViewBlogsCollection.deleteOne({id:id})
+        const res = await ViewBlogsCollection.deleteOne({_id:new ObjectId(id)})
         return res.deletedCount === 1
     },
 
@@ -34,16 +44,9 @@ export const blogDataRepositories =  {
             createdAt: new Date().toISOString(),
             isMembership: false
         }
-        const result = await blogsCollection.insertOne(newBlog)
+         await blogsCollection.insertOne(newBlog)
 
-        return {
-            id: newBlog._id.toString(),
-            name: newBlog.name,
-            description: newBlog.description,
-            websiteUrl: newBlog.websiteUrl,
-            createdAt: newBlog.createdAt,
-            isMembership: newBlog.isMembership
-        }
+        return  mapBlogToBlogView(newBlog)
 
 
     },

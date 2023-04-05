@@ -19,6 +19,7 @@ export const dbBlog_Post = client.db('HWdb') //made short
 //BLOG
 
 export type BlogDbType = {
+    _id: ObjectId
     name: string;
     description:string;
     websiteUrl:string;

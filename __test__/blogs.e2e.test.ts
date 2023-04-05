@@ -1,6 +1,7 @@
 import request from 'supertest'
 import { app } from '../src/settings'
 import {BlogViewType} from "../src/repositoriesDataLayer/db";
+import {ObjectId} from "mongodb";
 
 describe('Basic:testing blogs', ()=>{
     let newBlogs: BlogViewType | null
@@ -86,7 +87,7 @@ describe('Basic:testing blogs', ()=>{
 
         secondObj = createResponse.body
         expect(secondObj).toEqual({
-            id: expect.any(String),
+            id: secondObj!.id,
             name: 'parampam',
             description: 'fsиііиаіиіі fsffsdfdafdas',
             websiteUrl: 'https://www.example.com/',
