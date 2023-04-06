@@ -7,16 +7,13 @@ function mapBlogToBlogView(blog: BlogDbType): BlogViewType {
 }
 
 
-
-
-
-
 export const blogDataRepositories =  {
 
 //get all
-    async readAllBlog():Promise<Array<BlogViewType>> {
-        return ViewBlogsCollection.find().toArray()   //!!!
-
+    async readAllBlog(): Promise<Array<BlogViewType>> {
+        const dbBlogs: BlogDbType[] = await blogsCollection.find().toArray();
+        const blogViews: BlogViewType[] = dbBlogs.map((blog) => mapBlogToBlogView(blog));
+        return blogViews;
     },
 
 //find by id
@@ -33,10 +30,10 @@ export const blogDataRepositories =  {
         const res = await ViewBlogsCollection.deleteOne({_id:new ObjectId(id)})
         return res.deletedCount === 1
     },
-
+//create
     async createNewBlog(name:string,description:string,webUrl:string):Promise<BlogViewType>{
 
-        const newBlog:WithId<BlogDbType> = {
+        const newBlog:WithId<BlogDbType> = {   //WithId
             _id: new ObjectId(),
             name: name,
             description: description,

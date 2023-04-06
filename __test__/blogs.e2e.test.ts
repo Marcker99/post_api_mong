@@ -60,6 +60,7 @@ describe('Basic:testing blogs', ()=>{
             .expect(201)
 //!!!
         newBlogs = createResponse.body
+
         expect(newBlogs).toEqual({
             id: expect.any(String),
             name: 'parampam',
@@ -88,7 +89,7 @@ describe('Basic:testing blogs', ()=>{
         secondObj = createResponse.body
         expect(secondObj).toEqual({
             id: secondObj!.id,
-            name: 'parampam',
+            name: 'parampam grgdgrrs rsggsr',
             description: 'fsиііиаіиіі fsffsdfdafdas',
             websiteUrl: 'https://www.example.com/',
             createdAt: expect.any(String),
