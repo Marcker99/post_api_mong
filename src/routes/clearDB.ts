@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
-import {postDataRepositories} from "../repositoriesDataLayer/DB_POSTrepo";
-import {blogDataRepositories} from "../repositoriesDataLayer/DB_BLOGrepo";
+import {postDataRepositories} from "../repositories/DB_POSTrepo";
+import {blogDataRepositories} from "../repositories/DB_BLOGrepo";
 
 export const clearRout = Router({})
 

@@ -1,5 +1,5 @@
 import {body} from "express-validator";
-import {ViewBlogsCollection} from "../../repositoriesDataLayer/db";
+import {ViewBlogsCollection} from "../../../repositories/db";
 export const checkTitle = body('title')
     .notEmpty()
     .withMessage({

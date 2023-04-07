@@ -1,8 +1,8 @@
 import {Request, Response, Router} from "express";
-import {blogDataRepositories} from "../repositoriesDataLayer/DB_BLOGrepo";
-import {errorsMiddleware} from "../middleWares/errors_Middleware";
-import {authMiddleWare} from "../middleWares/auth.middleware";
-import {checkDescription, checkName, checkUrl} from "../middleWares/validators/Blog_validator";
+import {blogDataRepositories} from "../repositories/DB_BLOGrepo";
+import {errorsMiddleware} from "./middleWares/errors_Middleware";
+import {authMiddleWare} from "./middleWares/auth.middleware";
+import {checkDescription, checkName, checkUrl} from "./middleWares/validators/Blog_validator";
 
 export const blogsRoutes = Router({})
 

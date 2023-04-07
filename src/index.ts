@@ -1,6 +1,6 @@
 
 import {app} from "./settings";
-import {runDb} from "./repositoriesDataLayer/db";
+import {runDb} from "./repositories/db";
 const port = 918
 
 

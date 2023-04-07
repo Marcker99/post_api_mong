@@ -1,9 +1,9 @@
 
 import {Request, Response, Router} from "express";
-import {authMiddleWare} from "../middleWares/auth.middleware";
-import {postDataRepositories} from "../repositoriesDataLayer/DB_POSTrepo";
-import {checkBlogId, checkContent, checkShortDescription, checkTitle} from "../middleWares/validators/Post_valiators";
-import {errorsMiddleware} from "../middleWares/errors_Middleware";
+import {authMiddleWare} from "./middleWares/auth.middleware";
+import {postDataRepositories} from "../repositories/DB_POSTrepo";
+import {checkBlogId, checkContent, checkShortDescription, checkTitle} from "./middleWares/validators/Post_valiators";
+import {errorsMiddleware} from "./middleWares/errors_Middleware";
 
 
 

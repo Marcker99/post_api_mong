@@ -1,6 +1,6 @@
 import request from 'supertest'
 import { app } from '../src/settings'
-import {BlogViewType} from "../src/repositoriesDataLayer/db";
+import {BlogViewType} from "../src/repositories/db";
 import {ObjectId} from "mongodb";
 
 describe('Basic:testing blogs', ()=>{
@@ -81,7 +81,7 @@ describe('Basic:testing blogs', ()=>{
             .post('/blogs')
             .set('Authorization', 'Basic ' + Buffer.from('admin:qwerty').toString('base64'))
             .send({
-                name: 'parampam', description: 'fsиііиаіиіі fsffsdfdafdas',
+                name: 'newNAme', description: 'fsиііиаіиіі fsffsdfdafdas',
                 websiteUrl: 'https://www.example.com/'
             })
             .expect(201)
@@ -89,7 +89,7 @@ describe('Basic:testing blogs', ()=>{
         secondObj = createResponse.body
         expect(secondObj).toEqual({
             id: secondObj!.id,
-            name: 'parampam grgdgrrs rsggsr',
+            name: 'newNAme',
             description: 'fsиііиаіиіі fsffsdfdafdas',
             websiteUrl: 'https://www.example.com/',
             createdAt: expect.any(String),
@@ -140,7 +140,7 @@ describe('Basic:testing blogs', ()=>{
              await request(app)
             .put('/blogs/' + newBlogs!.id)
             .set('Authorization', 'Basic ' + Buffer.from('admin:qwerty').toString('base64'))
-            .send({ name: 'aupdate namee', description: 'fsиііиа4444іиіі fsffsdfdafdas333',
+            .send({ name: 'aupdate', description: 'fsиііиа4444іиіі fsffsdfdafdas333',
                 websiteUrl:'https://www.updateurl.com/' })
             .expect(204)
 
@@ -148,7 +148,7 @@ describe('Basic:testing blogs', ()=>{
 
         await request(app).get('/blogs/' + newBlogs!.id).expect(200,
             {...newBlogs,
-                name: 'aupdate namee',
+                name: 'aupdate',
                 description: 'fsиііиа4444іиіі fsffsdfdafdas333',
                 websiteUrl:'https://www.updateurl.com/',
 

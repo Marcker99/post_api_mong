@@ -1,24 +1,20 @@
+
+/*
 import {BlogDbType, blogsCollection, BlogViewType, ViewBlogsCollection} from "./db";
 import {ObjectId, WithId} from "mongodb";
 
-function mapBlogToBlogView(blog: BlogDbType): BlogViewType {
-    return { id: blog._id.toString(),name: blog.name,description: blog.description,websiteUrl: blog.websiteUrl,
-    createdAt: blog.createdAt,isMembership: blog.isMembership }
-}
-
-
-export const blogDataRepositories =  {
+export const BlogService =  {
 
 //get all
     async readAllBlog(): Promise<Array<BlogViewType>> {
         const dbBlogs: BlogDbType[] = await blogsCollection.find().toArray();
-        const blogViews: BlogViewType[] = dbBlogs.map((blog) => mapBlogToBlogView(blog));
+        const blogViews: BlogViewType[] = dbBlogs.map((blog) => mapBlogToBlogView(blog)); //[{}] each elem
         return blogViews;
     },
 
 //find by id
     async readBlogById(id: string):Promise<BlogViewType | null> {
-      const isIdValid = ObjectId.isValid(id) //ask gpt
+        const isIdValid = ObjectId.isValid(id) //ask gpt
         if(!isIdValid) {
             return null
         }
@@ -41,7 +37,7 @@ export const blogDataRepositories =  {
             createdAt: new Date().toISOString(),
             isMembership: false
         }
-         await blogsCollection.insertOne(newBlog)
+        await blogsCollection.insertOne(newBlog)
 
         return  mapBlogToBlogView(newBlog)
 
@@ -49,16 +45,16 @@ export const blogDataRepositories =  {
     },
 
     async updateBlog(id:string,name:string,description:string,webUrl:string):Promise<boolean>{
-         const update = await ViewBlogsCollection.updateOne({id:id},{$set:{name: name,
-             description:description,websiteUrl:webUrl}})
-         return update.matchedCount > 0   // <- !!!!
-     },
-     async clearAll(){
+        const update = await ViewBlogsCollection.updateOne({id:id},{$set:{name: name,
+                description:description,websiteUrl:webUrl}})
+        return update.matchedCount > 0   // <- !!!!
+    },
+    async clearAll(){
         return  ViewBlogsCollection.deleteMany({})
     }
 
-    }
+}
 
 
-
+ */
 

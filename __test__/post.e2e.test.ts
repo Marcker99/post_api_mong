@@ -1,8 +1,8 @@
 
 import request from 'supertest'
 import { app } from '../src/settings'
-import {postObj, BlogViewType} from "../src/repositoriesDataLayer/db";
-import {blogDataRepositories} from "../src/repositoriesDataLayer/DB_BLOGrepo";
+import {postObj, BlogViewType} from "../src/repositories/db";
+import {blogDataRepositories} from "../src/repositories/DB_BLOGrepo";
 
 
 describe('Post testing', () => {
