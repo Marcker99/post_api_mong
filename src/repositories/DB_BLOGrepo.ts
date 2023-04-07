@@ -54,7 +54,7 @@ export const blogDataRepositories =  {
         if(!isIdValid) {
             return false
         }
-         const update = await blogsCollection.updateOne({id: new ObjectId(id)},{$set:{name: name,
+         const update = await blogsCollection.updateOne({_id: new ObjectId(id)},{$set:{name: name,
              description:description,websiteUrl:webUrl}})
 
         if (!update){
