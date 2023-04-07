@@ -56,7 +56,14 @@ export const blogDataRepositories =  {
         }
          const update = await blogsCollection.updateOne({id: new ObjectId(id)},{$set:{name: name,
              description:description,websiteUrl:webUrl}})
-         return update.matchedCount > 0   // <- !!!!
+
+        if (!update){
+            return false
+        } else {
+            return true
+        }
+
+         //return update.matchedCount > 0   // <- !!!!
      },
      async clearAll(){
         return  blogsCollection.deleteMany({})
