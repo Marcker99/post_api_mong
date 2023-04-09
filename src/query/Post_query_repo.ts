@@ -37,7 +37,7 @@ export const postQueryCollection = {
 
 
 
-        const postDB: postDbType[] = await postCollection.find().sort({sortField:checkSortOrder})
+        const postDB: postDbType[] = await postCollection.find().sort({[sortField]:checkSortOrder})
             .skip((numPage - 1) * pageSize).limit(pageSize).toArray()
 
         const resultPost: postViewType[] = postDB.map((posts) => postMapToView(posts))
