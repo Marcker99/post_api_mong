@@ -1,13 +1,13 @@
 
 import request from 'supertest'
 import { app } from '../src/settings'
-import {postObj, BlogViewType} from "../src/repositories/db";
+import {postViewType, BlogViewType} from "../src/repositories/db";
 import {blogDataRepositories} from "../src/repositories/DB_BLOGrepo";
 
 
 describe('Post testing', () => {
     let dataFromBlogDB: BlogViewType | null
-    let newPosts: postObj | null
+    let newPosts: postViewType | null
 
     beforeAll(async () => {
         await request(app).delete('/testing/all-data').expect(204)

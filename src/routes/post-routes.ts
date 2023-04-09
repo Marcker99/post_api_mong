@@ -4,13 +4,19 @@ import {authMiddleWare} from "./middleWares/auth.middleware";
 import {postDataRepositories} from "../repositories/DB_POSTrepo";
 import {checkBlogId, checkContent, checkShortDescription, checkTitle} from "./middleWares/validators/Post_valiators";
 import {errorsMiddleware} from "./middleWares/errors_Middleware";
+import {postQueryCollection} from "../query/Post_query_repo";
 
 
 
 export const postRoutes = Router({})
 //routes
 postRoutes.get('/',async (req: Request, res: Response) => {
-    const answer = await postDataRepositories.readAllPost()
+    const answer = await postQueryCollection.readAllPost(
+        req.query.pageNumber as string,
+        req.query.pageSize as string,
+        req.query.sortBy as string,
+        req.query.sortDirection as string
+    )
     res.send(answer)
 })
 //post

@@ -42,7 +42,16 @@ export const blogsCollection = client.db('HWdb').collection<BlogDbType> ('blogs'
 
 
 //POST
-export type postObj = {
+export type postDbType = {
+    _id:ObjectId;
+    title:string;
+    shortDescription:string;
+    content:string;
+    blogId:string;
+    blogName:string;
+    createdAt:string;
+}
+export type postViewType = {
     id:string;
     title:string;
     shortDescription:string;
@@ -52,4 +61,4 @@ export type postObj = {
     createdAt:string;
 
 }
-export const postCollection = dbBlog_Post.collection<postObj>('posts') // short
+export const postCollection = dbBlog_Post.collection<postDbType>('posts') // short

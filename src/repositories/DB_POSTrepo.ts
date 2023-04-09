@@ -1,25 +1,49 @@
 
-import {blogsCollection, postCollection, postObj} from "./db";
+import {blogsCollection, postCollection, postDbType, postViewType} from "./db";
 import {ObjectId} from "mongodb";
+
+function postMapToView(post:postDbType):postViewType{
+    return {
+        id:post._id.toString(),
+        title:post.title,
+        shortDescription:post.shortDescription,
+        content: post.content,
+        blogId: post.blogId,
+        blogName:post.blogName,
+        createdAt:post.createdAt,
+    }
+
+}
 
 export const postDataRepositories = {
 //get all
-    async readAllPost():Promise<postObj[]> {
-        return  postCollection.find({},{projection:{_id:0}}).toArray()
+    async readAllPost():Promise<Array<postViewType>> {
+        const postDB: postDbType[] = await postCollection.find().toArray()
+        const result:postViewType[] = postDB.map((posts) => postMapToView(posts))
+        return result
         },
 //  get by id
 
-    async readPostById(id: string):Promise<postObj | null> {
-       return  postCollection.findOne({id:id},{projection:{_id:0}})
+    async readPostById(id: string):Promise<postViewType | null> {
+        const isIdValid = ObjectId.isValid(id)
+        if(!isIdValid) {
+            return null
+        }
+       const postObject: postDbType | null = await postCollection.findOne({_id: new ObjectId(id)})
+        return postObject ? postMapToView(postObject): null;
     },
 //delete by id
     async removePostById(id: string ): Promise<boolean> {
-        const result = await postCollection.deleteOne({id:id})
+        const isIdValid = ObjectId.isValid(id)
+        if(!isIdValid) {
+            return false
+        }
+        const result = await postCollection.deleteOne({_id:new ObjectId(id)})
         return result.deletedCount === 1
 
     },
 //create
-    async createNewPost(title:string,shortDescription:string,content:string,blogId:string):Promise<postObj>{
+    async createNewPost(title:string,shortDescription:string,content:string,blogId:string):Promise<postViewType>{
 
             const findBlogName = await blogsCollection.findOne({_id: new ObjectId(blogId)})
             let blogName:string
@@ -29,8 +53,8 @@ export const postDataRepositories = {
                 blogName = findBlogName.name
             }
        //?
-            const newPost:postObj = {
-            id: Math.floor((Math.random() * 1000)).toString(),
+            const newPost:postDbType = {
+            _id: new ObjectId(),
             title: title,
             shortDescription: shortDescription,
             content: content,
@@ -39,23 +63,22 @@ export const postDataRepositories = {
             createdAt: new Date().toISOString()
         }
             await postCollection.insertOne(newPost)
-            return {
-                id: newPost.id,
-                title: newPost.title,
-                shortDescription: newPost.shortDescription,
-                content: newPost.content,
-                blogId: newPost.blogId,
-                blogName: newPost.blogName,
-                createdAt: newPost.createdAt
-            }
+            return postMapToView(newPost)
         },
 //update
     async updatePost(id:string,title:string,shortDescription:string,content:string,blogId:string):Promise<boolean>{
-
-        const checkUpdate = await postCollection.updateOne({id:id},{$set:{title:title,
+        const isIdValid = ObjectId.isValid(id)
+        if(!isIdValid) {
+            return false
+        }
+        const checkUpdate = await postCollection.updateOne({_id:new ObjectId(id)},{$set:{title:title,
                 shortDescription:shortDescription,
             content:content,blogId:blogId}})
-        return checkUpdate.matchedCount > 0
+        if (!checkUpdate){
+            return false
+        } else {
+            return true
+        }
 
      },
     async clearAll(){

@@ -11,7 +11,7 @@ export const blogDataRepositories =  {
 
 //get all
     async readAllBlog(): Promise<Array<BlogViewType>> {
-        //TODO подумать як зарефакторити або винести
+
         const dbBlogs: BlogDbType[] = await blogsCollection.find().toArray();  //!!!!!!
         const blogViews: BlogViewType[] = dbBlogs.map((blog) => mapBlogToBlogView(blog)); //[{}] each elem
         return blogViews;
@@ -19,7 +19,7 @@ export const blogDataRepositories =  {
 
 //find by id
     async readBlogById(id: string):Promise<BlogViewType | null> {
-      const isIdValid = ObjectId.isValid(id) //ask gpt
+      const isIdValid = ObjectId.isValid(id)
         if(!isIdValid) {
             return null
         }

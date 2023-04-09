@@ -1,4 +1,4 @@
-import {BlogDbType, blogsCollection, BlogViewType} from "./repositories/db";
+import {BlogDbType, blogsCollection, BlogViewType} from "../repositories/db";
 import {check} from "express-validator";
 type PaginationWithBlogView ={
     pagesCount: number;
@@ -23,7 +23,7 @@ export const queryCollection = {
           //sort params
           const checkSortOrder:any = sortOrder === 'asc' ? 1 : -1 //?????
           //searchName
-          const nameFilter = { name: { $regex: new RegExp(search, 'i') } }
+          const nameFilter = { name: { $regex: new RegExp(searchName, 'i') } }
               //total count
           const totalCount = await blogsCollection.countDocuments(nameFilter);
           const pagesCount = Math.ceil(totalCount / limitNum);
