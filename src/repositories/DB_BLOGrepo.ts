@@ -1,4 +1,4 @@
-import {BlogDbType, blogsCollection, BlogViewType, ViewBlogsCollection} from "./db";
+import {BlogDbType, blogsCollection, BlogViewType} from "./db";
 import {ObjectId, WithId} from "mongodb";
 
 function mapBlogToBlogView(blog: BlogDbType): BlogViewType {
@@ -12,7 +12,7 @@ export const blogDataRepositories =  {
 //get all
     async readAllBlog(): Promise<Array<BlogViewType>> {
         //TODO подумать як зарефакторити або винести
-        const dbBlogs: BlogDbType[] = await blogsCollection.find().toArray();  //
+        const dbBlogs: BlogDbType[] = await blogsCollection.find().toArray();  //!!!!!!
         const blogViews: BlogViewType[] = dbBlogs.map((blog) => mapBlogToBlogView(blog)); //[{}] each elem
         return blogViews;
     },
@@ -28,7 +28,7 @@ export const blogDataRepositories =  {
     },
 //delete
     async removeBlogById(id: string ):Promise<boolean> {
-        const res = await ViewBlogsCollection.deleteOne({_id:new ObjectId(id)})
+        const res = await blogsCollection.deleteOne({_id:new ObjectId(id)})
         return res.deletedCount === 1
     },
 //create

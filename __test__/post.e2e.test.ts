@@ -69,7 +69,7 @@ describe('Post testing', () => {
                 content: 'not words not sentence just empty string',
                 blogId: '345blablablabHelloWorld ',
             })
-            .expect(400, {
+            .expect(400, {     //change ?
                 errorsMessages: [
                     {
                         message: "Blog does not exist",
@@ -89,7 +89,7 @@ describe('Post testing', () => {
                 title: '',
                 shortDescription: '',
                 content: '',
-                blogId: dataFromBlogDB?.id,
+                blogId: dataFromBlogDB!.id,
             })
             .expect(400, {
                 "errorsMessages": [

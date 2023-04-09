@@ -35,7 +35,7 @@ export type BlogViewType = {
     createdAt:string;
     isMembership:boolean;
 }
-export const ViewBlogsCollection = client.db('HWdb').collection<BlogViewType> ('blogs') //full
+
 
 export const blogsCollection = client.db('HWdb').collection<BlogDbType> ('blogs')
 

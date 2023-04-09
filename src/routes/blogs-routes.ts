@@ -3,14 +3,22 @@ import {blogDataRepositories} from "../repositories/DB_BLOGrepo";
 import {errorsMiddleware} from "./middleWares/errors_Middleware";
 import {authMiddleWare} from "./middleWares/auth.middleware";
 import {checkDescription, checkName, checkUrl} from "./middleWares/validators/Blog_validator";
+import {queryCollection} from "../query_repo";
 
 export const blogsRoutes = Router({})
 
 
 //routes
 blogsRoutes.get('/', async (req: Request, res: Response) => {
-    const answer = await blogDataRepositories.readAllBlog()
-    res.send(answer)
+    const result =
+        await queryCollection.readAllBlog(
+            req.query.pageNumber as string,
+            req.query.pageSize as string,
+            req.query.searchNameTerm as string,
+            req.query.sortBy as string,
+            req.query.sortDirection as string
+        )
+    res.send(result)
 })
 //post
 blogsRoutes.post('/',

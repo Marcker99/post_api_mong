@@ -1,5 +1,6 @@
 import {body} from "express-validator";
-import {ViewBlogsCollection} from "../../../repositories/db";
+import {blogsCollection} from "../../../repositories/db";
+import {ObjectId} from "mongodb";
 export const checkTitle = body('title')
     .notEmpty()
     .withMessage({
@@ -74,7 +75,7 @@ export const checkBlogId = body('blogId')
     })
     .bail()
     .custom(async (value, { req }) => {
-        const blogIdValue = await ViewBlogsCollection.findOne({id:value})
+        const blogIdValue = await blogsCollection.findOne({_id: new ObjectId(value)})
         if (!blogIdValue) {
             throw new Error();
         }
