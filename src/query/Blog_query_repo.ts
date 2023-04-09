@@ -21,14 +21,14 @@ export const queryCollection = {
           const sortField:string = sortElem || 'createdAt';
           const sortOrder:string = sortParams || 'desc';
           //sort params
-          const checkSortOrder:any = sortOrder === 'asc' ? 1 : -1 //?????
+          const checkSortOrder:any= sortOrder === 'asc' ? 1 : -1 //?????
           //searchName
           const nameFilter = { name: { $regex: new RegExp(searchName, 'i') } }
               //total count
           const totalCount = await blogsCollection.countDocuments(nameFilter);
           const pagesCount = Math.ceil(totalCount / limitNum);
           //
-          const blogs: BlogDbType[] = await blogsCollection.find(nameFilter).sort({ sortField: checkSortOrder })
+          const blogs: BlogDbType[] = await blogsCollection.find(nameFilter).sort({ [sortField]: checkSortOrder })
            .skip((pageNum - 1) * limitNum)
            .limit(limitNum)
            .toArray();  //!!!!!!
