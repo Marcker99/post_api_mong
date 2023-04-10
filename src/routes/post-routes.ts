@@ -53,6 +53,12 @@ postRoutes.put('/:id',
     checkContent,
     checkBlogId,
     errorsMiddleware,async (req:Request,res:Response) =>{
+           const postId = req.params.id
+        const resultID = await postQueryCollection.checkPostId(postId)
+        if(!resultID){
+            res.sendStatus(404)
+            return
+        }
     const answer = await postDataRepositories.updatePost(req.params.id,req.body.title,req.body.shortDescription,
         req.body.content,req.body.blogId)
     if(answer) {

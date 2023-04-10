@@ -1,5 +1,6 @@
+import {ObjectId} from "mongodb";
 
-  type PaginationWithPostView ={
+type PaginationWithPostView ={
     pagesCount: number;
     page: number;
     pageSize: number;
@@ -76,5 +77,15 @@ export const postQueryCollection = {
             items: resultPost
         }
 
+    },
+
+     async checkPostId(id: string): Promise<boolean> {
+        const isIdValid = ObjectId.isValid(id)
+        if(!isIdValid) {
+            return false
+        }
+        const foundObject: postDbType | null =  await postCollection.findOne({_id: new ObjectId(id)}) //!
+        return foundObject === null ?  false : true;
     }
+
 }
