@@ -5,6 +5,8 @@ import {authMiddleWare} from "./middleWares/auth.middleware";
 import {checkDescription, checkName, checkUrl} from "./middleWares/validators/Blog_validator";
 import {queryCollection} from "../query/Blog_query_repo";
 import {postQueryCollection} from "../query/Post_query_repo";
+import {checkBlogId, checkContent, checkShortDescription, checkTitle} from "./middleWares/validators/Post_valiators";
+import {postDataRepositories} from "../repositories/DB_POSTrepo";
 
 export const blogsRoutes = Router({})
 
@@ -78,6 +80,23 @@ blogsRoutes.get('/:blogId/posts',async (req:Request,res:Response) => {
     res.send(response)
 
 })
+
+blogsRoutes.post('/:blogId/posts',   authMiddleWare,
+    checkTitle,
+    checkShortDescription,
+    checkContent,
+    checkBlogId,
+    errorsMiddleware,async (req:Request,res:Response) =>{
+        const blogId = req.params.blogId
+        const result = queryCollection.checkBlogById(blogId)
+        if(!result){
+            res.sendStatus(404)
+            return
+        }
+        const newPost = await postDataRepositories.createNewPost(req.body.title, req.body.shortDescription,
+            req.body.content, req.params.blogId)
+        res.status(201).send(newPost)
+} )
 //delete by id
 blogsRoutes.delete('/:id', authMiddleWare, async (req: Request, res: Response) => {
     const answer = await blogDataRepositories.removeBlogById(req.params.id.toString()) //toString?
