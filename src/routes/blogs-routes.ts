@@ -65,7 +65,7 @@ blogsRoutes.put('/:id',
 //get post by blogId
 blogsRoutes.get('/:blogId/posts',async (req:Request,res:Response) => {
     const blogId = req.params.blogId
-    const result = queryCollection.checkBlogById(blogId)
+    const result = await queryCollection.checkBlogById(blogId)
     if(!result){
         res.sendStatus(404)
         return
@@ -87,7 +87,7 @@ blogsRoutes.post('/:blogId/posts',   authMiddleWare,
     checkContent,
     errorsMiddleware,async (req:Request,res:Response) =>{
         const blogId = req.params.blogId
-        const result = queryCollection.checkBlogById(blogId)
+        const result = await queryCollection.checkBlogById(blogId)
         if(!result){
             res.sendStatus(404)
             return
