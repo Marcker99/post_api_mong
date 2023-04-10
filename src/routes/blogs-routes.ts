@@ -102,7 +102,7 @@ blogsRoutes.post('/:blogId/posts',   authMiddleWare,
 //delete by id
 blogsRoutes.delete('/:id', authMiddleWare, async (req: Request, res: Response) => {
     const answer = await blogDataRepositories.removeBlogById(req.params.id.toString()) //toString?
-    answer ? res.send(204) : res.send(404)
+    answer ? res.sendStatus(204) : res.sendStatus(404)
 })
 //
 

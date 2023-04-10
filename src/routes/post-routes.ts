@@ -68,7 +68,7 @@ postRoutes.put('/:id',
 
 postRoutes.delete('/:id',authMiddleWare,async (req: Request, res: Response) => {
     const answer = await postDataRepositories.removePostById(req.params.id)
-        answer? res.send(204) : res.send(404)
+        answer? res.sendStatus(204) : res.sendStatus(404)
 })
 //
 

@@ -31,6 +31,10 @@ export const blogDataRepositories =  {
     },
 //delete
     async removeBlogById(id: string ):Promise<boolean> {
+        const isIdValid = ObjectId.isValid(id)
+        if(!isIdValid) {
+            return false
+        }
         const res = await blogsCollection.deleteOne({_id:new ObjectId(id)})
         return res.deletedCount === 1
     },
