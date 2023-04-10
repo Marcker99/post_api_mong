@@ -36,7 +36,7 @@ postRoutes.post('/',
 
 //get by id
 postRoutes.get('/:id',async (req: Request, res: Response) => {
-    let answer = await postDataRepositories.readPostById(req.params.id)
+    let answer = await postQueryCollection.readPostById(req.params.id)
     if (!answer) {
         res.sendStatus(404)
         return

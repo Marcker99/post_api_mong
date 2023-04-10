@@ -37,7 +37,7 @@ blogsRoutes.post('/',
 //get by id
 blogsRoutes.get('/:id', async (req: Request, res: Response) => {
 
-    let result = await blogDataRepositories.readBlogById(req.params.id.toString())
+    let result = await queryCollection.readBlogById(req.params.id.toString())
     if (!result) {
         res.sendStatus(404)
         return

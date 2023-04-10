@@ -86,6 +86,15 @@ export const postQueryCollection = {
         }
         const foundObject: postDbType | null =  await postCollection.findOne({_id: new ObjectId(id)}) //!
         return foundObject === null ?  false : true;
+    },
+    //get id
+    async readPostById(id: string):Promise<postViewType | null> {
+        const isIdValid = ObjectId.isValid(id)
+        if(!isIdValid) {
+            return null
+        }
+        const postObject: postDbType | null = await postCollection.findOne({_id: new ObjectId(id)})
+        return postObject ? postMapToView(postObject): null;
     }
 
 }
