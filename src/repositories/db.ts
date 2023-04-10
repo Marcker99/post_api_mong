@@ -6,7 +6,7 @@ export const client = new MongoClient(mongoURI) //switch db
 export async function runDb(){ //<- put starting db to function
     try {
         await client.connect() // connect to db
-        await client.db("HWdb").command({ping: 1}); //ping
+        await client.db("HWdb").command({ping: 1}); //ping//(optional)
         console.log("connected success") //check connect
     } catch {
         console.log("can't connect");

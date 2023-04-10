@@ -49,5 +49,32 @@ export const postQueryCollection = {
                 items: resultPost
             }
 
+    },
+    async readAllPostByBlogId(page: string , limit: string , sortElem: string , sortParams: string,searchBlogId:string):
+        Promise<PaginationWithPostView> {
+        const numPage: number = parseInt(page)
+        const pageSize: number = parseInt(limit)
+        const sortOrder:string = sortParams || 'desc'
+        const checkSortOrder:any = sortOrder === 'asc' ? 1 : -1
+        const sortField:string = sortElem || 'createdAt'
+        const BlogIdFilter = { blogId: { $regex: new RegExp(searchBlogId, 'i') } }
+        //
+        const totalCount = await postCollection.countDocuments()
+        const pagesCount = Math.ceil(totalCount / pageSize)
+
+
+
+        const postDB: postDbType[] = await postCollection.find(BlogIdFilter).sort({[sortField]:checkSortOrder})
+            .skip((numPage - 1) * pageSize).limit(pageSize).toArray()
+
+        const resultPost: postViewType[] = postDB.map((posts) => postMapToView(posts))
+        return {
+            pagesCount,
+            page: numPage,
+            pageSize,
+            totalCount,
+            items: resultPost
+        }
+
     }
 }

@@ -10,12 +10,15 @@ function mapBlogToBlogView(blog: BlogDbType): BlogViewType {
 export const blogDataRepositories =  {
 
 //get all
-    async readAllBlog(): Promise<Array<BlogViewType>> {
+  /*  async readAllBlog(): Promise<Array<BlogViewType>> {
 
         const dbBlogs: BlogDbType[] = await blogsCollection.find().toArray();  //!!!!!!
         const blogViews: BlogViewType[] = dbBlogs.map((blog) => mapBlogToBlogView(blog)); //[{}] each elem
         return blogViews;
     },
+
+   */
+
 
 //find by id
     async readBlogById(id: string):Promise<BlogViewType | null> {

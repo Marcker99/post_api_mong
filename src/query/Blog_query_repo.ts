@@ -1,5 +1,6 @@
 import {BlogDbType, blogsCollection, BlogViewType} from "../repositories/db";
 import {check} from "express-validator";
+import {ObjectId} from "mongodb";
 type PaginationWithBlogView ={
     pagesCount: number;
     page: number;
@@ -41,5 +42,15 @@ export const queryCollection = {
            items: blogViews
        }
 },
+    async checkBlogById(id: string): Promise<boolean> {
+        const isIdValid = ObjectId.isValid(id)
+        if(!isIdValid) {
+            return false
+        }
+        const foundObject: BlogDbType | null =  await blogsCollection.findOne({_id: new ObjectId(id)}) //!
+        return foundObject ?  true : false;
+    },
 
 }
+
+

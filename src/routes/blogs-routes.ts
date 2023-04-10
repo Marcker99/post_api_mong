@@ -4,6 +4,7 @@ import {errorsMiddleware} from "./middleWares/errors_Middleware";
 import {authMiddleWare} from "./middleWares/auth.middleware";
 import {checkDescription, checkName, checkUrl} from "./middleWares/validators/Blog_validator";
 import {queryCollection} from "../query/Blog_query_repo";
+import {postQueryCollection} from "../query/Post_query_repo";
 
 export const blogsRoutes = Router({})
 
@@ -50,16 +51,33 @@ blogsRoutes.put('/:id',
     checkUrl,
     errorsMiddleware,
     async (req: Request, res: Response) => {
-        const answer = await blogDataRepositories.updateBlog(req.params.id, req.body.name,
+        const result = await blogDataRepositories.updateBlog(req.params.id, req.body.name,
             req.body.description, req.body.websiteUrl)
-        if (answer) {
+        if (result) {
             res.sendStatus(204)
         } else {
             res.sendStatus(404)
         }
     })
 
+//get post by blogId
+blogsRoutes.get('/:blogId/posts',async (req:Request,res:Response) => {
+    const blogId = req.params.blogId
+    const result = queryCollection.checkBlogById(blogId)
+    if(!result){
+        res.sendStatus(404)
+        return
+    }
+        const response = await postQueryCollection.readAllPostByBlogId(
+        req.query.pageNumber as string,
+        req.query.pageSize as string,
+        req.query.sortBy as string,
+        req.query.sortDirection as string,
+        blogId
+    )
+    res.send(response)
 
+})
 //delete by id
 blogsRoutes.delete('/:id', authMiddleWare, async (req: Request, res: Response) => {
     const answer = await blogDataRepositories.removeBlogById(req.params.id.toString()) //toString?

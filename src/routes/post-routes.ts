@@ -11,13 +11,13 @@ import {postQueryCollection} from "../query/Post_query_repo";
 export const postRoutes = Router({})
 //routes
 postRoutes.get('/',async (req: Request, res: Response) => {
-    const answer = await postQueryCollection.readAllPost(
+    const result = await postQueryCollection.readAllPost(
         req.query.pageNumber as string,
         req.query.pageSize as string,
         req.query.sortBy as string,
         req.query.sortDirection as string
     )
-    res.send(answer)
+    res.send(result)
 })
 //post
 postRoutes.post('/',
