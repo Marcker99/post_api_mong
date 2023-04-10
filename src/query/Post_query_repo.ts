@@ -60,7 +60,7 @@ export const postQueryCollection = {
         const sortField:string = sortElem || 'createdAt'
         const BlogIdFilter = { blogId: { $regex: new RegExp(searchBlogId, 'i') } }
         //
-        const totalCount = await postCollection.countDocuments()
+        const totalCount = await postCollection.countDocuments(BlogIdFilter)
         const pagesCount = Math.ceil(totalCount / pageSize)
 
 
