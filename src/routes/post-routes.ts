@@ -57,8 +57,10 @@ postRoutes.put('/:id',
         req.body.content,req.body.blogId)
     if(answer) {
           res.sendStatus(204)
+        return
       } else {
           res.sendStatus(404)
+        return
       }
     })
 //delete by id
