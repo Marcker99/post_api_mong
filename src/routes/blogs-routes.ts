@@ -36,6 +36,7 @@ blogsRoutes.post('/',
     })
 //get by id
 blogsRoutes.get('/:id', async (req: Request, res: Response) => {
+
     let result = await blogDataRepositories.readBlogById(req.params.id.toString())
     if (!result) {
         res.sendStatus(404)
@@ -57,8 +58,10 @@ blogsRoutes.put('/:id',
             req.body.description, req.body.websiteUrl)
         if (result) {
             res.sendStatus(204)
+            return
         } else {
             res.sendStatus(404)
+            return
         }
     })
 
