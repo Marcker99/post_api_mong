@@ -5,7 +5,7 @@ import {authMiddleWare} from "./middleWares/auth.middleware";
 import {checkDescription, checkName, checkUrl} from "./middleWares/validators/Blog_validator";
 import {queryCollection} from "../query/Blog_query_repo";
 import {postQueryCollection} from "../query/Post_query_repo";
-import {checkBlogId, checkContent, checkShortDescription, checkTitle} from "./middleWares/validators/Post_valiators";
+import { checkContent, checkShortDescription, checkTitle} from "./middleWares/validators/Post_valiators";
 import {postDataRepositories} from "../repositories/DB_POSTrepo";
 
 export const blogsRoutes = Router({})
@@ -54,6 +54,12 @@ blogsRoutes.put('/:id',
     checkUrl,
     errorsMiddleware,
     async (req: Request, res: Response) => {
+        const blogId = req.params.id
+        const resultID = await queryCollection.checkBlogById(blogId)
+        if(!resultID){
+            res.sendStatus(404)
+            return
+        }
         const result = await blogDataRepositories.updateBlog(req.params.id, req.body.name,
             req.body.description, req.body.websiteUrl)
         if (result) {
@@ -61,7 +67,7 @@ blogsRoutes.put('/:id',
             return
         } else {
             res.sendStatus(404)
-            return
+           return
         }
     })
 

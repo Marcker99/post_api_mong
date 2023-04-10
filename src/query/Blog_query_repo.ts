@@ -49,7 +49,7 @@ export const queryCollection = {
         }
         const foundObject: BlogDbType | null =  await blogsCollection.findOne({_id: new ObjectId(id)}) //!
         return foundObject === null ?  false : true;
-    },
+    }
 
 }
 
