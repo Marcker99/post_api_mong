@@ -53,8 +53,8 @@ export const postQueryCollection = {
     },
     async readAllPostByBlogId(page: string , limit: string , sortElem: string , sortParams: string,searchBlogId:string):
         Promise<PaginationWithPostView> {
-        const numPage: number = parseInt(page)
-        const pageSize: number = parseInt(limit)
+        const numPage: number = parseInt(page) || 1
+        const pageSize: number = parseInt(limit) || 10
         const sortOrder:string = sortParams || 'desc'
         const checkSortOrder:any = sortOrder === 'asc' ? 1 : -1
         const sortField:string = sortElem || 'createdAt'
