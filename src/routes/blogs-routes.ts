@@ -85,7 +85,6 @@ blogsRoutes.post('/:blogId/posts',   authMiddleWare,
     checkTitle,
     checkShortDescription,
     checkContent,
-    checkBlogId,
     errorsMiddleware,async (req:Request,res:Response) =>{
         const blogId = req.params.blogId
         const result = queryCollection.checkBlogById(blogId)
