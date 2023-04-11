@@ -8,30 +8,7 @@ function mapBlogToBlogView(blog: BlogDbType): BlogViewType {
 
 
 export const blogDataRepositories =  {
-
-//get all
-  /*  async readAllBlog(): Promise<Array<BlogViewType>> {
-
-        const dbBlogs: BlogDbType[] = await blogsCollection.find().toArray();  //!!!!!!
-        const blogViews: BlogViewType[] = dbBlogs.map((blog) => mapBlogToBlogView(blog)); //[{}] each elem
-        return blogViews;
-    },
-
-   */
-
-
-//find by id
-/*
-async readBlogById(id: string):Promise<BlogViewType | null> {
- const isIdValid = ObjectId.isValid(id)
-   if(!isIdValid) {
-       return null
-   }
-   const foundObject: BlogDbType | null =  await blogsCollection.findOne({_id: new ObjectId(id)}) //!
-   return foundObject ?  mapBlogToBlogView(foundObject) : null;
-},
- */
-
+    
 //delete
 async removeBlogById(id: string ):Promise<boolean> {
    const isIdValid = ObjectId.isValid(id)
