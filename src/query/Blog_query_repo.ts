@@ -13,7 +13,7 @@ function mapBlogToBlogView(blog: BlogDbType): BlogViewType {
         createdAt: blog.createdAt,isMembership: blog.isMembership }
 }
 
-export const queryCollection = {
+export const blogsQueryCollection = {
     //get all
       async readAllBlog(page: string , limit: string , search: string , sortElem: string , sortParams: string ):
           Promise<PaginationWithBlogView> {

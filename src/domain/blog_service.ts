@@ -1,34 +1,15 @@
-
-/*
-import {BlogDbType, blogsCollection, BlogViewType, ViewBlogsCollection} from "./db";
+import {blogDataRepositories} from "../repositories/DB_BLOGrepo";
 import {ObjectId, WithId} from "mongodb";
+import {BlogDbType, BlogViewType} from "../repositories/db";
 
 export const BlogService =  {
-
-//get all
-    async readAllBlog(): Promise<Array<BlogViewType>> {
-        const dbBlogs: BlogDbType[] = await blogsCollection.find().toArray();
-        const blogViews: BlogViewType[] = dbBlogs.map((blog) => mapBlogToBlogView(blog)); //[{}] each elem
-        return blogViews;
-    },
-
-//find by id
-    async readBlogById(id: string):Promise<BlogViewType | null> {
-        const isIdValid = ObjectId.isValid(id) //ask gpt
-        if(!isIdValid) {
-            return null
-        }
-        const foundObject: BlogDbType | null =  await ViewBlogsCollection.findOne({_id: new ObjectId(id)}) //!
-        return foundObject ?  mapBlogToBlogView(foundObject) : null;
-    },
 //delete
     async removeBlogById(id: string ):Promise<boolean> {
-        const res = await ViewBlogsCollection.deleteOne({_id:new ObjectId(id)})
-        return res.deletedCount === 1
+        const res = await blogDataRepositories.removeBlogById(id)
+        return res
     },
 //create
     async createNewBlog(name:string,description:string,webUrl:string):Promise<BlogViewType>{
-
         const newBlog:WithId<BlogDbType> = {   //WithId
             _id: new ObjectId(),
             name: name,
@@ -37,24 +18,15 @@ export const BlogService =  {
             createdAt: new Date().toISOString(),
             isMembership: false
         }
-        await blogsCollection.insertOne(newBlog)
-
-        return  mapBlogToBlogView(newBlog)
-
-
+        const createdBlog = await blogDataRepositories.createNewBlog(newBlog)
+        return  createdBlog
     },
-
+//update
     async updateBlog(id:string,name:string,description:string,webUrl:string):Promise<boolean>{
-        const update = await ViewBlogsCollection.updateOne({id:id},{$set:{name: name,
-                description:description,websiteUrl:webUrl}})
-        return update.matchedCount > 0   // <- !!!!
+        return  await blogDataRepositories.updateBlog(id,name,description,webUrl)
     },
-    async clearAll(){
-        return  ViewBlogsCollection.deleteMany({})
-    }
-
 }
 
 
- */
+
 

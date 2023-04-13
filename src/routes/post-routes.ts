@@ -1,7 +1,7 @@
 
 import {Request, Response, Router} from "express";
 import {authMiddleWare} from "./middleWares/auth.middleware";
-import {postDataRepositories} from "../repositories/DB_POSTrepo";
+import {PostService} from "../domain/post_service";
 import {checkBlogId, checkContent, checkShortDescription, checkTitle} from "./middleWares/validators/Post_valiators";
 import {errorsMiddleware} from "./middleWares/errors_Middleware";
 import {postQueryCollection} from "../query/Post_query_repo";
@@ -28,7 +28,7 @@ postRoutes.post('/',
     checkContent,
     checkBlogId,
     errorsMiddleware,async (req: Request, res: Response) => {
-        const newPost = await postDataRepositories.createNewPost(req.body.title, req.body.shortDescription,
+        const newPost = await PostService.createNewPost(req.body.title, req.body.shortDescription,
             req.body.content, req.body.blogId)
         res.status(201).send(newPost)
 
@@ -61,7 +61,7 @@ postRoutes.put('/:id',
             res.sendStatus(404)
             return
         }
-    const answer = await postDataRepositories.updatePost(req.params.id,req.body.title,req.body.shortDescription,
+    const answer = await PostService.updatePost(req.params.id,req.body.title,req.body.shortDescription,
         req.body.content,req.body.blogId)
     if(answer) {
           res.sendStatus(204)
@@ -75,7 +75,7 @@ postRoutes.put('/:id',
 
 
 postRoutes.delete('/:id',authMiddleWare,isIdValid,async (req: Request, res: Response) => {
-    const answer = await postDataRepositories.removePostById(req.params.id)
+    const answer = await PostService.removePostById(req.params.id)
         answer? res.sendStatus(204) : res.sendStatus(404)
 })
 //

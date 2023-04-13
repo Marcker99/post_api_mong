@@ -16,27 +16,7 @@ function postMapToView(post:postDbType):postViewType{
 }
 
 export const postDataRepositories = {
-//get all
-  /*
-    async readAllPost():Promise<Array<postViewType>> {
-        const postDB: postDbType[] = await postCollection.find().toArray()
-        const result:postViewType[] = postDB.map((posts) => postMapToView(posts))
-        return result
-        },
-   */
 
-//  get by id
-/*
-   async readPostById(id: string):Promise<postViewType | null> {
-       const isIdValid = ObjectId.isValid(id)
-       if(!isIdValid) {
-           return null
-       }
-      const postObject: postDbType | null = await postCollection.findOne({_id: new ObjectId(id)})
-       return postObject ? postMapToView(postObject): null;
-   },
-
- */
 //delete by id
    async removePostById(id: string ): Promise<boolean> {
        const result = await postCollection.deleteOne({_id:new ObjectId(id)})
@@ -44,26 +24,9 @@ export const postDataRepositories = {
 
    },
 //create
-   async createNewPost(title:string,shortDescription:string,content:string,blogId:string):Promise<postViewType>{
-           const findBlogName = await blogsCollection.findOne({_id: new ObjectId(blogId)})
-           let blogName:string
-           if(!findBlogName){
-               blogName = "undefined"
-           } else {
-               blogName = findBlogName.name
-           }
-      //?
-           const newPost:postDbType = {
-           _id: new ObjectId(),
-           title: title,
-           shortDescription: shortDescription,
-           content: content,
-           blogId: blogId,
-           blogName: blogName,
-           createdAt: new Date().toISOString()
-       }
-           await postCollection.insertOne(newPost)
-           return postMapToView(newPost)
+   async createNewPost(newPost:postDbType):Promise<postViewType>{
+       await postCollection.insertOne(newPost)
+       return postMapToView(newPost)
        },
 //update
    async updatePost(id:string,title:string,shortDescription:string,content:string,blogId:string):Promise<boolean>{
