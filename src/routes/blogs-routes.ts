@@ -81,14 +81,15 @@ blogsRoutes.get('/:blogId/posts',isIdValid, async (req:Request,res:Response) => 
 
 })
 
-blogsRoutes.post('/:blogId/posts',   authMiddleWare,
+blogsRoutes.post('/:blogId/posts',authMiddleWare,
+    isIdValid,
     checkTitle,
     checkShortDescription,
     checkContent,
     errorsMiddleware,
     async (req:Request,res:Response) =>{
         const blogId = req.params.blogId
-        const result = await queryCollection.checkBlogById(blogId)
+        const result = await queryCollection.readBlogById(blogId)
         if(!result){
             res.sendStatus(404)
             return

@@ -45,15 +45,12 @@ export const queryCollection = {
        }
 },
     //get id
-    async readBlogById(id: string):Promise<BlogViewType | null> {//dfsfsfdsfdsfsfdf
+    async readBlogById(id: string):Promise<BlogViewType | null> {
         const foundObject: BlogDbType | null =  await blogsCollection.findOne({_id: new ObjectId(id)}) //!
         return foundObject ?  mapBlogToBlogView(foundObject) : null;
     },
     //check
-    async checkBlogById(id: string): Promise<boolean> {
-        const foundObject: BlogDbType | null =  await blogsCollection.findOne({_id: new ObjectId(id)}) //!
-        return foundObject === null ?  false : true;
-    },
+
 
 
 }
