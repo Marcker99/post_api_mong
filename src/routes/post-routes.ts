@@ -5,6 +5,7 @@ import {postDataRepositories} from "../repositories/DB_POSTrepo";
 import {checkBlogId, checkContent, checkShortDescription, checkTitle} from "./middleWares/validators/Post_valiators";
 import {errorsMiddleware} from "./middleWares/errors_Middleware";
 import {postQueryCollection} from "../query/Post_query_repo";
+import {isIdValid} from "./middleWares/check_valid_id";
 
 
 
@@ -35,7 +36,7 @@ postRoutes.post('/',
     })
 
 //get by id
-postRoutes.get('/:id',async (req: Request, res: Response) => {
+postRoutes.get('/:id',isIdValid,async (req: Request, res: Response) => {
     let answer = await postQueryCollection.readPostById(req.params.id)
     if (!answer) {
         res.sendStatus(404)
@@ -48,13 +49,14 @@ postRoutes.get('/:id',async (req: Request, res: Response) => {
 //put
 postRoutes.put('/:id',
     authMiddleWare,
+    isIdValid,
     checkTitle,
     checkShortDescription,
     checkContent,
     checkBlogId,
     errorsMiddleware,async (req:Request,res:Response) =>{
-           const postId = req.params.id
-        const resultID = await postQueryCollection.checkPostId(postId)
+        const postId = req.params.id
+        const resultID = await postQueryCollection.readPostById(postId)
         if(!resultID){
             res.sendStatus(404)
             return
@@ -72,7 +74,7 @@ postRoutes.put('/:id',
 //delete by id
 
 
-postRoutes.delete('/:id',authMiddleWare,async (req: Request, res: Response) => {
+postRoutes.delete('/:id',authMiddleWare,isIdValid,async (req: Request, res: Response) => {
     const answer = await postDataRepositories.removePostById(req.params.id)
         answer? res.sendStatus(204) : res.sendStatus(404)
 })

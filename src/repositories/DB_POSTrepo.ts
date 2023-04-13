@@ -39,17 +39,12 @@ export const postDataRepositories = {
  */
 //delete by id
    async removePostById(id: string ): Promise<boolean> {
-       const isIdValid = ObjectId.isValid(id)
-       if(!isIdValid) {
-           return false
-       }
        const result = await postCollection.deleteOne({_id:new ObjectId(id)})
        return result.deletedCount === 1
 
    },
 //create
    async createNewPost(title:string,shortDescription:string,content:string,blogId:string):Promise<postViewType>{
-
            const findBlogName = await blogsCollection.findOne({_id: new ObjectId(blogId)})
            let blogName:string
            if(!findBlogName){
@@ -72,10 +67,6 @@ export const postDataRepositories = {
        },
 //update
    async updatePost(id:string,title:string,shortDescription:string,content:string,blogId:string):Promise<boolean>{
-       const isIdValid = ObjectId.isValid(id)
-       if(!isIdValid) {
-           return false
-       }
        const checkUpdate = await postCollection.updateOne({_id:new ObjectId(id)},{$set:{title:title,
                shortDescription:shortDescription,
            content:content,blogId:blogId}})

@@ -56,6 +56,12 @@ blogsRoutes.put('/:id',
     checkUrl,
     errorsMiddleware,
     async (req: Request, res: Response) => {
+        const blogId = req.params.id
+        const results = await queryCollection.readBlogById(blogId)
+        if(!results){
+            res.sendStatus(404)
+            return
+        }
         const result = await blogDataRepositories.updateBlog(req.params.id, req.body.name,
             req.body.description, req.body.websiteUrl)
         if (result) {
