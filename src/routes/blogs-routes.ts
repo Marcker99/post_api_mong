@@ -68,8 +68,8 @@ blogsRoutes.put('/:id',
     })
 
 //get post by blogId
-blogsRoutes.get('/:blogId/posts',isIdValid, async (req:Request,res:Response) => {
-    const blogId = req.params.blogId
+blogsRoutes.get('/:id/posts',isIdValid, async (req:Request,res:Response) => {
+    const blogId = req.params.id
         const response = await postQueryCollection.readAllPostByBlogId(
         req.query.pageNumber as string,
         req.query.pageSize as string,
@@ -81,20 +81,22 @@ blogsRoutes.get('/:blogId/posts',isIdValid, async (req:Request,res:Response) => 
 
 })
 
-blogsRoutes.post('/:blogId/posts',   authMiddleWare,
+blogsRoutes.post('/:id/posts',authMiddleWare,
+    isIdValid,
     checkTitle,
     checkShortDescription,
     checkContent,
-    errorsMiddleware,isIdValid ,
+    errorsMiddleware,
+
     async (req:Request,res:Response) =>{
-        const blogId = req.params.blogId
-        const result = await queryCollection.checkBlogById(blogId)
+        const blogId = req.params.id
+        const result = await queryCollection.readBlogById(blogId)
         if(!result){
             res.sendStatus(404)
             return
         }
         const newPost = await postDataRepositories.createNewPost(req.body.title, req.body.shortDescription,
-            req.body.content, req.params.blogId)
+            req.body.content, req.params.id)
         res.status(201).send(newPost)
 } )
 //delete by id
