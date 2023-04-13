@@ -1,6 +1,6 @@
 import {BlogDbType, blogsCollection, BlogViewType} from "../repositories/db";
 
-import {ObjectId, Sort} from "mongodb";
+import {ObjectId} from "mongodb";
 type PaginationWithBlogView ={
     pagesCount: number;
     page: number;
@@ -23,15 +23,14 @@ export const queryCollection = {
           const sortField:string = sortElem || 'createdAt';
           const sortOrder:string = sortParams || 'desc';
           //sort params
-          const checkSortOrder:Sort = sortOrder === 'asc' ? 1 : -1 //todo?????
+          const checkSortOrder:any= sortOrder === 'asc' ? 1 : -1 //?????
           //searchName
           const nameFilter = { name: { $regex: new RegExp(searchName, 'i') } }
               //total count
           const totalCount = await blogsCollection.countDocuments(nameFilter);
           const pagesCount = Math.ceil(totalCount / limitNum);
           //
-          const sort = { [sortField]: checkSortOrder }
-          const blogs: BlogDbType[] = await blogsCollection.find(nameFilter).sort(sort)
+          const blogs: BlogDbType[] = await blogsCollection.find(nameFilter).sort({ [sortField]: checkSortOrder })
            .skip((pageNum - 1) * limitNum)
            .limit(limitNum)
            .toArray();  //!!!!!!
@@ -46,11 +45,22 @@ export const queryCollection = {
 },
     //get id
     async readBlogById(id: string):Promise<BlogViewType | null> {
+        const isIdValid = ObjectId.isValid(id)
+        if(!isIdValid) {
+            return null
+        }
         const foundObject: BlogDbType | null =  await blogsCollection.findOne({_id: new ObjectId(id)}) //!
         return foundObject ?  mapBlogToBlogView(foundObject) : null;
     },
     //check
-
+    async checkBlogById(id: string): Promise<boolean> {
+        const isIdValid = ObjectId.isValid(id)
+        if(!isIdValid) {
+            return false
+        }
+        const foundObject: BlogDbType | null =  await blogsCollection.findOne({_id: new ObjectId(id)}) //!
+        return foundObject === null ?  false : true;
+    },
 
 
 }
