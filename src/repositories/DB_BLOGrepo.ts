@@ -11,10 +11,6 @@ export const blogDataRepositories =  {
     
 //delete
 async removeBlogById(id: string ):Promise<boolean> {
-   const isIdValid = ObjectId.isValid(id)
-   if(!isIdValid) {
-       return false
-   }
    const res = await blogsCollection.deleteOne({_id:new ObjectId(id)})
    return res.deletedCount === 1
 },
@@ -37,13 +33,8 @@ async createNewBlog(name:string,description:string,webUrl:string):Promise<BlogVi
 },
 //update
 async updateBlog(id:string,name:string,description:string,webUrl:string):Promise<boolean>{
- const isIdValid = ObjectId.isValid(id)
-   if(!isIdValid) {
-       return false
-   }
     const update = await blogsCollection.updateOne({_id: new ObjectId(id)},{$set:{name: name,
         description:description,websiteUrl:webUrl}})
-
    if (!update){
        return false
    } else {
