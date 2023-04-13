@@ -1,4 +1,4 @@
-import {ObjectId} from "mongodb";
+import {ObjectId, Sort} from "mongodb";
 
 type PaginationWithPostView ={
     pagesCount: number;
@@ -56,7 +56,7 @@ export const postQueryCollection = {
         const numPage: number = parseInt(page) || 1
         const pageSize: number = parseInt(limit) || 10
         const sortOrder:string = sortParams || 'desc'
-        const checkSortOrder:any = sortOrder === 'asc' ? 1 : -1
+        const checkSortOrder:Sort = sortOrder === 'asc' ? 1 : -1
         const sortField:string = sortElem || 'createdAt'
         const BlogIdFilter = { blogId: { $regex: new RegExp(searchBlogId, 'i') } }
         //
@@ -83,7 +83,7 @@ export const postQueryCollection = {
         const isIdValid = ObjectId.isValid(id)
         if(!isIdValid) {
             return false
-        }
+        } //404 middleware
         const foundObject: postDbType | null =  await postCollection.findOne({_id: new ObjectId(id)}) //!
         return foundObject === null ?  false : true;
     },

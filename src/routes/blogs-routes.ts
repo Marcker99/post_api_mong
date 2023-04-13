@@ -7,6 +7,7 @@ import {queryCollection} from "../query/Blog_query_repo";
 import {postQueryCollection} from "../query/Post_query_repo";
 import { checkContent, checkShortDescription, checkTitle} from "./middleWares/validators/Post_valiators";
 import {postDataRepositories} from "../repositories/DB_POSTrepo";
+import {isIdValid} from "./middleWares/check_valid_id";
 
 export const blogsRoutes = Router({})
 
@@ -35,7 +36,7 @@ blogsRoutes.post('/',
         res.status(201).send(newBlog)
     })
 //get by id
-blogsRoutes.get('/:id', async (req: Request, res: Response) => {
+blogsRoutes.get('/:id',isIdValid , async (req: Request, res: Response) => {
 
     let result = await queryCollection.readBlogById(req.params.id.toString())
     if (!result) {
@@ -49,17 +50,12 @@ blogsRoutes.get('/:id', async (req: Request, res: Response) => {
 //put
 blogsRoutes.put('/:id',
     authMiddleWare,
+    isIdValid,
     checkName,
     checkDescription,
     checkUrl,
     errorsMiddleware,
     async (req: Request, res: Response) => {
-        const blogId = req.params.id
-        const resultID = await queryCollection.checkBlogById(blogId)
-        if(!resultID){
-            res.sendStatus(404)
-            return
-        }
         const result = await blogDataRepositories.updateBlog(req.params.id, req.body.name,
             req.body.description, req.body.websiteUrl)
         if (result) {
@@ -72,13 +68,8 @@ blogsRoutes.put('/:id',
     })
 
 //get post by blogId
-blogsRoutes.get('/:blogId/posts',async (req:Request,res:Response) => {
+blogsRoutes.get('/:blogId/posts',isIdValid, async (req:Request,res:Response) => {
     const blogId = req.params.blogId
-    const result = await queryCollection.checkBlogById(blogId)
-    if(!result){
-        res.sendStatus(404)
-        return
-    }
         const response = await postQueryCollection.readAllPostByBlogId(
         req.query.pageNumber as string,
         req.query.pageSize as string,
@@ -94,7 +85,8 @@ blogsRoutes.post('/:blogId/posts',   authMiddleWare,
     checkTitle,
     checkShortDescription,
     checkContent,
-    errorsMiddleware,async (req:Request,res:Response) =>{
+    errorsMiddleware,isIdValid ,
+    async (req:Request,res:Response) =>{
         const blogId = req.params.blogId
         const result = await queryCollection.checkBlogById(blogId)
         if(!result){
@@ -106,7 +98,7 @@ blogsRoutes.post('/:blogId/posts',   authMiddleWare,
         res.status(201).send(newPost)
 } )
 //delete by id
-blogsRoutes.delete('/:id', authMiddleWare, async (req: Request, res: Response) => {
+blogsRoutes.delete('/:id', authMiddleWare,isIdValid , async (req: Request, res: Response) => {
     const answer = await blogDataRepositories.removeBlogById(req.params.id.toString()) //toString?
     answer ? res.sendStatus(204) : res.sendStatus(404)
 })
