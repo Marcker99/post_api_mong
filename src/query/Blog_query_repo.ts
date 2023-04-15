@@ -1,6 +1,7 @@
 import {BlogDbType, blogsCollection, BlogViewType} from "../repositories/db";
 
 import {ObjectId} from "mongodb";
+import {mapBlogToBlogView} from "../repositories/DB_BLOGrepo";
 type PaginationWithBlogView ={
     pagesCount: number;
     page: number;
@@ -8,10 +9,7 @@ type PaginationWithBlogView ={
     totalCount: number;
     items: BlogViewType [];
 }
-function mapBlogToBlogView(blog: BlogDbType): BlogViewType {
-    return { id: blog._id.toString(),name: blog.name,description: blog.description,websiteUrl: blog.websiteUrl,
-        createdAt: blog.createdAt,isMembership: blog.isMembership }
-}
+
 
 export const blogsQueryCollection = {
     //get all

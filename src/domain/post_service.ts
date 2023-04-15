@@ -1,4 +1,4 @@
-import { postDbType, postViewType} from "../repositories/db";
+import { PostDbType, PostViewType} from "../repositories/db";
 import {ObjectId, WithId} from "mongodb";
 import {postDataRepositories} from "../repositories/DB_POSTrepo";
 import {blogsQueryCollection} from "../query/Blog_query_repo";
@@ -12,7 +12,7 @@ export const PostService = {
 
     },
 //create
-    async createNewPost(title:string,shortDescription:string,content:string,blogId:string):Promise<postViewType>{
+    async createNewPost(title:string,shortDescription:string,content:string,blogId:string):Promise<PostViewType>{
         const findBlogName = await blogsQueryCollection.readBlogById(blogId)
         let blogName:string
         if(!findBlogName){
@@ -20,7 +20,7 @@ export const PostService = {
         } else {
             blogName = findBlogName.name
         }
-        const newPost:WithId<postDbType> = {
+        const newPost:WithId<PostDbType> = {
             _id: new ObjectId(),
             title: title,
             shortDescription: shortDescription,

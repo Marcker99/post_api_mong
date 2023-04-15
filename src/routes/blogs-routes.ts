@@ -109,8 +109,8 @@ blogsRoutes.post('/:id/posts',authMiddleWare,
 } )
 //delete by id
 blogsRoutes.delete('/:id', authMiddleWare,isIdValid , async (req: Request, res: Response) => {
-    const answer = await BlogService.removeBlogById(req.params.id.toString()) //toString?
-    answer ? res.sendStatus(204) : res.sendStatus(404)
+    const result = await BlogService.removeBlogById(req.params.id.toString()) //toString?
+    result ? res.sendStatus(204) : res.sendStatus(404)
 })
 //
 

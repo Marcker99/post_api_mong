@@ -5,23 +5,13 @@ type PaginationWithPostView ={
     page: number;
     pageSize: number;
     totalCount: number;
-    items: postViewType [];
+    items: PostViewType [];
 }
 
-import {postCollection, postDbType, postViewType} from "../repositories/db";
+import {postCollection, PostDbType, PostViewType} from "../repositories/db";
+import {postMapToView} from "../repositories/DB_POSTrepo";
 
-function postMapToView(post:postDbType):postViewType{
-    return {
-        id:post._id.toString(),
-        title:post.title,
-        shortDescription:post.shortDescription,
-        content: post.content,
-        blogId: post.blogId,
-        blogName:post.blogName,
-        createdAt:post.createdAt,
-    }
 
-}
 
 export const postQueryCollection = {
 //get all
@@ -38,10 +28,10 @@ export const postQueryCollection = {
 
 
 
-        const postDB: postDbType[] = await postCollection.find().sort({[sortField]:checkSortOrder})
+        const postDB: PostDbType[] = await postCollection.find().sort({[sortField]:checkSortOrder})
             .skip((numPage - 1) * pageSize).limit(pageSize).toArray()
 
-        const resultPost: postViewType[] = postDB.map((posts) => postMapToView(posts))
+        const resultPost: PostViewType[] = postDB.map((posts) => postMapToView(posts))
         return {
                 pagesCount,
                 page: numPage,
@@ -65,10 +55,10 @@ export const postQueryCollection = {
 
 
 
-        const postDB: postDbType[] = await postCollection.find(BlogIdFilter).sort({[sortField]:checkSortOrder})
+        const postDB: PostDbType[] = await postCollection.find(BlogIdFilter).sort({[sortField]:checkSortOrder})
             .skip((numPage - 1) * pageSize).limit(pageSize).toArray()
 
-        const resultPost: postViewType[] = postDB.map((posts) => postMapToView(posts))
+        const resultPost: PostViewType[] = postDB.map((posts) => postMapToView(posts))
         return {
             pagesCount,
             page: numPage,
@@ -81,8 +71,8 @@ export const postQueryCollection = {
 
 
     //get id
-    async readPostById(id: string):Promise<postViewType | null> {
-        const postObject: postDbType | null = await postCollection.findOne({_id: new ObjectId(id)})
+    async readPostById(id: string):Promise<PostViewType | null> {
+        const postObject: PostDbType | null = await postCollection.findOne({_id: new ObjectId(id)})
         return postObject ? postMapToView(postObject): null;
     }
 

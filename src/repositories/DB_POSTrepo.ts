@@ -1,8 +1,8 @@
 
-import {blogsCollection, postCollection, postDbType, postViewType} from "./db";
+import {blogsCollection, postCollection, PostDbType, PostViewType} from "./db";
 import {ObjectId} from "mongodb";
 
-function postMapToView(post:postDbType):postViewType{
+export function postMapToView(post:PostDbType):PostViewType{
     return {
         id:post._id.toString(),
         title:post.title,
@@ -24,7 +24,7 @@ export const postDataRepositories = {
 
    },
 //create
-   async createNewPost(newPost:postDbType):Promise<postViewType>{
+   async createNewPost(newPost:PostDbType):Promise<PostViewType>{
        await postCollection.insertOne(newPost)
        return postMapToView(newPost)
        },
