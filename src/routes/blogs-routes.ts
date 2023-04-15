@@ -77,6 +77,11 @@ blogsRoutes.put('/:id',
 //get post by blogId
 blogsRoutes.get('/:id/posts',isIdValid, async (req:Request,res:Response) => {
     const blogId = req.params.id
+    let result = await blogsQueryCollection.readBlogById(req.params.id.toString())
+    if (!result) {
+        res.sendStatus(404)
+        return
+    }
     //post query
         const response = await postQueryCollection.readAllPostByBlogId(
         req.query.pageNumber as string,
@@ -89,7 +94,8 @@ blogsRoutes.get('/:id/posts',isIdValid, async (req:Request,res:Response) => {
 
 })
 
-blogsRoutes.post('/:id/posts',authMiddleWare,
+blogsRoutes.post('/:id/posts',
+    authMiddleWare,
     isIdValid,
     checkTitle,
     checkShortDescription,
