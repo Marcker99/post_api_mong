@@ -13,12 +13,12 @@ type PaginationWithUserView ={
 
 export const usersQueryCollection = {
     //get all
-      async showAllUsers(page: string , limit: string , email: string ,login:string ,sortElem: string , sortParams: string ):
+      async showAllUsers(page: string , limit: string ,login:string, email: string,sortElem: string , sortParams: string ):
           Promise<PaginationWithUserView> {
           const pageNum:number = parseInt(page) || 1;
           const limitNum:number = parseInt(limit) || 10;
-          const searchEmail:string = email || '';  //make regexp
           const searchLogin:string = login || '';
+          const searchEmail:string = email || '';  //make regexp
           const sortField:string = sortElem || 'createdAt';
           const sortOrder:string = sortParams || 'desc';
           //sort params
@@ -26,8 +26,8 @@ export const usersQueryCollection = {
           //searchLogin and email
           const loginEmailFilter = {
               $or: [
-                  { email: { $regex: new RegExp(searchEmail, 'i') } },
-                  { login: { $regex: new RegExp(searchLogin, 'i') } }
+                  { login: { $regex: new RegExp(searchLogin, 'i') } },
+                  { email: { $regex: new RegExp(searchEmail, 'i') } }
               ]
           };
               //total count

@@ -12,8 +12,8 @@ export const usersRouter = Router({})
         const users = await usersQueryCollection.showAllUsers(
             req.query.pageNumber as string,
             req.query.pageSize as string,
-            req.query.searchEmail as string,
             req.query.searchLogin as string,
+            req.query.searchEmail as string,
             req.query.sortBy as string,
             req.query.sortDirection as string
         )
