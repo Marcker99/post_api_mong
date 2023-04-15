@@ -34,7 +34,7 @@ export const usersQueryCollection = {
           const totalCount = await usersCollection.countDocuments(loginEmailFilter);
           const pagesCount = Math.ceil(totalCount / limitNum);
           //
-          const users: UsersDbType[] = await  usersCollection.find(loginEmailFilter).sort({[sortField]: checkSortOrder })
+          const users: UsersDbType[] = await  usersCollection.find({loginEmailFilter}).sort({[sortField]: checkSortOrder })
            .skip((pageNum - 1) * limitNum)
            .limit(limitNum)
            .toArray();  //!!!!!!
