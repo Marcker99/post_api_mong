@@ -32,7 +32,7 @@ export const UserService = {
             return false
         }
         const userHash = await this._generateHash(password,user.salt)
-        if (!userHash){
+        if (userHash !== user.hash){
             return false
         } else {
             return true

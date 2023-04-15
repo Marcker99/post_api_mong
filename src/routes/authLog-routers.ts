@@ -5,8 +5,8 @@ import {UserService} from "../domain/users_service";
 
 export const authLogRouters = Router({})
 
-authLogRouters.post('/login',checkLoginOrEmail,checkPassword,errorsMiddleware,(req:Request,res:Response) =>{
-    const result = UserService.checkCredentials(req.body.loginOrEmail,req.body.password)
+authLogRouters.post('/login',checkLoginOrEmail,checkPassword,errorsMiddleware,async (req:Request,res:Response) =>{
+    const result = await UserService.checkCredentials(req.body.loginOrEmail, req.body.password)
     if(!result){
         res.sendStatus(401)
         return
