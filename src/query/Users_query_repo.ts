@@ -30,8 +30,11 @@ export const usersQueryCollection = {
                   { login: { $regex: new RegExp(searchLogin, 'i') } }
               ]
           };
-              //total count
-          const totalCount = await  usersCollection.countDocuments(loginEmailFilter);
+          //total count
+          const logCount = await  usersCollection.countDocuments({ login: { $regex: new RegExp(searchLogin, 'i') } })
+          const emailCount = await usersCollection.countDocuments({ email: { $regex: new RegExp(searchEmail, 'i') } })
+          const totalCount = logCount + emailCount;
+          //
           const pagesCount = Math.ceil(totalCount / limitNum);
           //
           const users: UsersDbType[] = await  usersCollection.find(loginEmailFilter).sort({[sortField]: checkSortOrder })
