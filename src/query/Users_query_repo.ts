@@ -22,7 +22,7 @@ export const usersQueryCollection = {
           const sortField:string = sortElem || 'createdAt';
           const sortOrder:string = sortParams || 'desc';
           //sort params
-          const checkSortOrder: 1|-1= sortOrder === 'asc' ? 1 : -1 //?????
+          const checkSortOrder:Sort= sortOrder === 'asc' ? 1 : -1 //?????
           //searchLogin and email
           const loginEmailFilter = {
               $or: [
@@ -31,10 +31,10 @@ export const usersQueryCollection = {
               ]
           };
               //total count
-          const totalCount = await usersCollection.countDocuments(loginEmailFilter);
+          const totalCount = await  usersCollection.countDocuments(loginEmailFilter);
           const pagesCount = Math.ceil(totalCount / limitNum);
           //
-          const users: UsersDbType[] = await  usersCollection.find({loginEmailFilter}).sort({[sortField]: checkSortOrder })
+          const users: UsersDbType[] = await  usersCollection.find(loginEmailFilter).sort({[sortField]: checkSortOrder })
            .skip((pageNum - 1) * limitNum)
            .limit(limitNum)
            .toArray();  //!!!!!!
