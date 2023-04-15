@@ -1,5 +1,5 @@
 
-import {ObjectId} from "mongodb";
+import {ObjectId, Sort} from "mongodb";
 import {usersCollection, UsersDbType, UsersViewType} from "../repositories/db";
 import {mapUserDbView} from "../repositories/DB-USERSrepo";
 type PaginationWithUserView ={
@@ -22,7 +22,7 @@ export const usersQueryCollection = {
           const sortField:string = sortElem || 'createdAt';
           const sortOrder:string = sortParams || 'desc';
           //sort params
-          const checkSortOrder:any= sortOrder === 'asc' ? 1 : -1 //?????
+          const checkSortOrder: 1|-1= sortOrder === 'asc' ? 1 : -1 //?????
           //searchLogin and email
           const loginEmailFilter = {
               $or: [
@@ -31,7 +31,7 @@ export const usersQueryCollection = {
               ]
           };
               //total count
-          const totalCount = await  usersCollection.countDocuments(loginEmailFilter);
+          const totalCount = await usersCollection.countDocuments(loginEmailFilter);
           const pagesCount = Math.ceil(totalCount / limitNum);
           //
           const users: UsersDbType[] = await  usersCollection.find(loginEmailFilter).sort({[sortField]: checkSortOrder })
