@@ -1,4 +1,4 @@
-import {commentsCollection, CommentsDbType, CommentsViewType} from "./db";
+import {commentsCollection, CommentsDbType, CommentsViewType, postCollection} from "./db";
 import {ObjectId} from "mongodb";
 
 export function mapCommentsToViewType(commentDb:CommentsDbType):CommentsViewType{
@@ -33,6 +33,9 @@ export const commentDataRepositories = {
        const result = await commentsCollection.deleteOne({_id:new ObjectId(id)})
        return result.deletedCount === 1
 
+    },
+    async clearAll(){
+        return postCollection.deleteMany({})
 
     }
 
