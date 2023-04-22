@@ -97,7 +97,7 @@ postRoutes.post('/:id/comments',authenticationMiddleware,checkCommentContent,err
 })
 
 
-postRoutes.get('/:id/comments',authenticationMiddleware,isIdValid,
+postRoutes.get('/:id/comments',isIdValid,
     async(req: Request, res: Response) =>{
     let post = await postQueryCollection.readPostById(req.params.id)
     if (!post) {
