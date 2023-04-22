@@ -1,5 +1,5 @@
 import {ObjectId, WithId} from "mongodb";
-import {UsersDbType, UsersViewType} from "../repositories/db";
+import {UserMeViewType, UsersDbType, UsersViewType} from "../repositories/db";
 import {userDataRepositories} from "../repositories/DB-USERSrepo";
 import bcrypt from "bcrypt"
 
@@ -11,7 +11,7 @@ export const UserService = {
         return result
     },
 //create
-    async createNewUser(login:string,password:string,email:string):Promise<UsersViewType >{
+    async createNewUser(login:string,password:string,email:string):Promise<UsersViewType>{
 
         const genSalt = await bcrypt.genSalt(10)
         const usersHash = await this._generateHash(password,genSalt)
@@ -29,18 +29,23 @@ export const UserService = {
     async checkCredentials(logEmail:string,password:string){
         const user = await userDataRepositories.checkUsersAuthLogData(logEmail)
         if(!user){
-            return false
+            return null
         }
         const userHash = await this._generateHash(password,user.salt)
         if (userHash !== user.hash){
-            return false
+            return null
         } else {
-            return true
+            return user
         }
     },
     async _generateHash(pass:string,salt:string){
         const result =  bcrypt.hash(pass,salt)
         return result
+    },
+    async getUserById(userId:ObjectId):Promise<UsersDbType | null>{
+        return await userDataRepositories.getById(userId)
     }
+
+
 
 }

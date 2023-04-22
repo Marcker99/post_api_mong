@@ -1,6 +1,6 @@
 
 import {ObjectId, Sort} from "mongodb";
-import {usersCollection, UsersDbType, UsersViewType} from "../repositories/db";
+import {UserMeViewType, usersCollection, UsersDbType, UsersViewType} from "../repositories/db";
 import {mapUserDbView} from "../repositories/DB-USERSrepo";
 type PaginationWithUserView ={
     pagesCount: number;
@@ -9,9 +9,14 @@ type PaginationWithUserView ={
     totalCount: number;
     items: UsersViewType [];
 }
-
+export function mapToUserMeView(user: UsersDbType): UserMeViewType {
+    return { login: user.login,email: user.email,createdAt: user.createdAt }
+}
 
 export const usersQueryCollection = {
+    async getMe(user: UsersDbType | null):Promise<UserMeViewType | null>{
+        return user? mapToUserMeView(user): null
+    },
     //get all
       async showAllUsers(page: string , limit: string ,login:string, email: string,sortElem: string , sortParams: string ):
           Promise<PaginationWithUserView> {

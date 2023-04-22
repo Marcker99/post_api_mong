@@ -50,13 +50,13 @@ export const postQueryCollection = {
         const sortField:string = sortElem || 'createdAt'
         const BlogIdFilter = { blogId: { $regex: new RegExp(searchBlogId, 'i') } }
         //
-        const totalCount = await postCollection.countDocuments(BlogIdFilter)
+        const totalCount = await postCollection.countDocuments(BlogIdFilter) //!
         const pagesCount = Math.ceil(totalCount / pageSize)
 
 
 
         const postDB: PostDbType[] = await postCollection.find(BlogIdFilter).sort({[sortField]:checkSortOrder})
-            .skip((numPage - 1) * pageSize).limit(pageSize).toArray()
+            .skip((numPage - 1) * pageSize).limit(pageSize).toArray() //!!!
 
         const resultPost: PostViewType[] = postDB.map((posts) => postMapToView(posts))
         return {

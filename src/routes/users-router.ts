@@ -1,5 +1,5 @@
 import {Router,Request,Response} from "express";
-import {authMiddleWare} from "./middleWares/auth.middleware";
+import {authorizationMiddleware} from "./middleWares/authorization.middleware";
 import {isIdValid} from "./middleWares/check_valid_id";
 import {checkEmail, checkLogin, checkPass} from "./middleWares/validators/Users_validator";
 import {errorsMiddleware} from "./middleWares/errors_Middleware";
@@ -8,7 +8,7 @@ import {usersQueryCollection} from "../query/Users_query_repo";
 
 
 export const usersRouter = Router({})
-    usersRouter.get('/',authMiddleWare,async (req:Request,res:Response) =>{
+    usersRouter.get('/',authorizationMiddleware,async (req:Request, res:Response) =>{
         const users = await usersQueryCollection.showAllUsers(
             req.query.pageNumber as string,
             req.query.pageSize as string,
@@ -20,7 +20,7 @@ export const usersRouter = Router({})
         res.send(users)
     });
 
-    usersRouter.post('/',authMiddleWare,
+    usersRouter.post('/',authorizationMiddleware,
         checkLogin,
         checkPass,
         checkEmail,
@@ -29,7 +29,7 @@ export const usersRouter = Router({})
             res.status(201).send(createdUser)
         });
 
-    usersRouter.delete('/:id',authMiddleWare,isIdValid,async (req:Request,res:Response) =>{
+    usersRouter.delete('/:id',authorizationMiddleware,isIdValid,async (req:Request, res:Response) =>{
         const result = await UserService.removeUserById(req.params.id.toString()) //toString?
         result ? res.sendStatus(204) : res.sendStatus(404)
     });

@@ -1,6 +1,6 @@
 import {BlogDbType, blogsCollection, BlogViewType} from "../repositories/db";
 
-import {ObjectId} from "mongodb";
+import {ObjectId, Sort} from "mongodb";
 import {mapBlogToBlogView} from "../repositories/DB_BLOGrepo";
 type PaginationWithBlogView ={
     pagesCount: number;
@@ -21,7 +21,7 @@ export const blogsQueryCollection = {
           const sortField:string = sortElem || 'createdAt';
           const sortOrder:string = sortParams || 'desc';
           //sort params
-          const checkSortOrder:any= sortOrder === 'asc' ? 1 : -1 //?????
+          const checkSortOrder:Sort= sortOrder === 'asc' ? 1 : -1 //?????
           //searchName
           const nameFilter = { name: { $regex: new RegExp(searchName, 'i') } }
               //total count

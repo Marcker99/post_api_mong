@@ -3,7 +3,8 @@ import {blogsRoutes} from "./routes/blogs-routes";
 import {postRoutes} from "./routes/post-routes";
 import {clearRout} from "./routes/clearDB";
 import {usersRouter} from "./routes/users-router";
-import {authLogRouters} from "./routes/authLog-routers";
+import {authenticationRouters} from "./routes/authentication-routers";
+import {commentsRouter} from "./routes/comments-router";
 
 export const app = express()
 
@@ -15,9 +16,19 @@ app.use('/posts',postRoutes)
 
 app.use('/users',usersRouter)
 
-app.use('/auth',authLogRouters)
+app.use('/auth',authenticationRouters)
+
+app.use('/comments',commentsRouter)
 //test/////////////////////////////////////////
 app.use('/testing',clearRout)
+
+app.use(commentsRouter)
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello world!') //test for vercel
 })
+
+//todo question???
+export const settings = {
+    MONGO_URI: process.env.MONGO_URL || 'mongodb://0.0.0.0:27017',
+    JWT_SECRET: process.env.JWT_SECRET || '123'
+}

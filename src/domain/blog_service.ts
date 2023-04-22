@@ -25,6 +25,7 @@ export const BlogService =  {
     async updateBlog(id:string,name:string,description:string,webUrl:string):Promise<boolean>{
         return  await blogDataRepositories.updateBlog(id,name,description,webUrl)
     },
+
 }
 
 

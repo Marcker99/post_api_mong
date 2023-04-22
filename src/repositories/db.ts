@@ -78,4 +78,32 @@ export type UsersViewType = {
     email:string;
     createdAt:string;
 }
+export type UserMeViewType = {
+    login:string;
+    email:string;
+    createdAt:string;
+}
 export const usersCollection = dbBlog_Post.collection<UsersDbType>('users')
+//comments
+export type CommentsDbType = {
+   _id:ObjectId;
+  content: string;
+  postId: string;
+  commentatorInfo:{
+      userId:string;
+      userLogin:string;
+ };
+  createdAt: string;
+}
+
+export type CommentsViewType = {
+    id: string;
+    content: string;
+    commentatorInfo:{
+        userId:string;
+        userLogin:string;
+    };
+    createdAt: string;
+}
+
+export const commentsCollection = dbBlog_Post.collection<CommentsDbType>('comments')

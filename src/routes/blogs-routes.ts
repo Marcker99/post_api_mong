@@ -1,7 +1,7 @@
 import {Request, Response, Router} from "express";
 import {BlogService} from "../domain/blog_service";
 import {errorsMiddleware} from "./middleWares/errors_Middleware";
-import {authMiddleWare} from "./middleWares/auth.middleware";
+import {authorizationMiddleware} from "./middleWares/authorization.middleware";
 import {checkDescription, checkName, checkUrl} from "./middleWares/validators/Blog_validator";
 import {blogsQueryCollection} from "../query/Blog_query_repo";
 import {postQueryCollection} from "../query/Post_query_repo";
@@ -27,7 +27,7 @@ blogsRoutes.get('/', async (req: Request, res: Response) => {
 })
 //post
 blogsRoutes.post('/',
-    authMiddleWare,
+    authorizationMiddleware,
     checkName,
     checkDescription,
     checkUrl,
@@ -50,7 +50,7 @@ blogsRoutes.get('/:id',isIdValid , async (req: Request, res: Response) => {
 
 //put
 blogsRoutes.put('/:id',
-    authMiddleWare,
+    authorizationMiddleware,
     isIdValid,
     checkName,
     checkDescription,
@@ -95,7 +95,7 @@ blogsRoutes.get('/:id/posts',isIdValid, async (req:Request,res:Response) => {
 })
 
 blogsRoutes.post('/:id/posts',
-    authMiddleWare,
+    authorizationMiddleware,
     isIdValid,
     checkTitle,
     checkShortDescription,
@@ -114,7 +114,7 @@ blogsRoutes.post('/:id/posts',
         res.status(201).send(newPost)
 } )
 //delete by id
-blogsRoutes.delete('/:id', authMiddleWare,isIdValid , async (req: Request, res: Response) => {
+blogsRoutes.delete('/:id', authorizationMiddleware,isIdValid , async (req: Request, res: Response) => {
     const result = await BlogService.removeBlogById(req.params.id.toString()) //toString?
     result ? res.sendStatus(204) : res.sendStatus(404)
 })
