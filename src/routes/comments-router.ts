@@ -52,7 +52,6 @@ commentsRouter.put('/:id',
 
 commentsRouter.delete('/:id',
     authenticationMiddleware,
-    errorsMiddleware,
     isIdValid,
     async (req:Request,res:Response)=>{
             let comment = await commentsQueryCollection.readCommentById(req.params.id) //todo ref or make mdw

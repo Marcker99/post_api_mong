@@ -92,7 +92,7 @@ postRoutes.post('/:id/comments',authenticationMiddleware,checkCommentContent,err
         return
     }
     const result = await CommentService.createNewComment(req.body.content,req.user!._id.toString(),req.user!.login,post.id)
-     res.send(result)
+     res.status(201).send(result)
 
 })
 
