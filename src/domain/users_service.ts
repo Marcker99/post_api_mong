@@ -40,7 +40,7 @@ export const UserService = {
             await EmailManager.userConfirmedMail(newUser)
         }catch (e) {
             if(!e){
-                await this.removeUserById(createdUser.id)
+                //await this.removeUserById(createdUser.id)
                 return null
             }
         }
