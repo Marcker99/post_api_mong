@@ -1,6 +1,7 @@
-import {commentsCollection, CommentsDbType, CommentsViewType} from "../repositories/db";
+import {commentsCollection} from "../repositories/db";
 import {ObjectId, Sort} from "mongodb";
 import {mapCommentsToViewType} from "../repositories/DB_COMMENTSrepo";
+import {CommentsDbType, CommentsViewType} from "../repositories/dbTypes/dbCommentsTypes";
 
 
 type PaginationWithCommentsView ={

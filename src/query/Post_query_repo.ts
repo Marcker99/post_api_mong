@@ -1,4 +1,8 @@
 import {ObjectId, Sort} from "mongodb";
+import {postCollection} from "../repositories/db";
+import {postMapToView} from "../repositories/DB_POSTrepo";
+import {PostDbType, PostViewType} from "../repositories/dbTypes/dbPostType";
+
 
 type PaginationWithPostView ={
     pagesCount: number;
@@ -7,10 +11,6 @@ type PaginationWithPostView ={
     totalCount: number;
     items: PostViewType [];
 }
-
-import {postCollection, PostDbType, PostViewType} from "../repositories/db";
-import {postMapToView} from "../repositories/DB_POSTrepo";
-
 
 
 export const postQueryCollection = {

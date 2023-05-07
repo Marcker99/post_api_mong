@@ -1,6 +1,7 @@
 
-import {blogsCollection, postCollection, PostDbType, PostViewType} from "./db";
+import {blogsCollection, postCollection} from "./db";
 import {ObjectId} from "mongodb";
+import {PostDbType, PostViewType} from "./dbTypes/dbPostType";
 
 export function postMapToView(post:PostDbType):PostViewType{
     return {

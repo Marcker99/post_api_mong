@@ -1,7 +1,7 @@
 import request from 'supertest'
 import { app } from '../src/settings'
-import {BlogViewType} from "../src/repositories/db";
 import {ObjectId} from "mongodb";
+import {BlogViewType} from "../src/repositories/dbTypes/dbBlogType";
 
 describe('Basic:testing blogs', ()=>{
     let newBlogs: BlogViewType | null

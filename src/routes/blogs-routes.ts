@@ -7,8 +7,8 @@ import {blogsQueryCollection} from "../query/Blog_query_repo";
 import {postQueryCollection} from "../query/Post_query_repo";
 import { checkContent, checkShortDescription, checkTitle} from "./middleWares/validators/Post_valiators";
 import {isIdValid} from "./middleWares/check_valid_id";
-import {BlogViewType} from "../repositories/db";
 import {PostService} from "../domain/post_service";
+import {BlogViewType} from "../repositories/dbTypes/dbBlogType";
 
 export const blogsRoutes = Router({})
 

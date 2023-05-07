@@ -1,7 +1,8 @@
-import { PostDbType, PostViewType} from "../repositories/db";
+
 import {ObjectId, WithId} from "mongodb";
 import {postDataRepositories} from "../repositories/DB_POSTrepo";
 import {blogsQueryCollection} from "../query/Blog_query_repo";
+import {PostDbType, PostViewType} from "../repositories/dbTypes/dbPostType";
 
 export const PostService = {
 

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import {settings} from "../settings";
-import {UsersDbType} from "../repositories/db";
 import {ObjectId} from "mongodb";
+import {UsersDbType} from "../repositories/dbTypes/dbUserType";
 
 export const jwtService = {
     async createJWT(user: UsersDbType){
@@ -14,7 +14,7 @@ export const jwtService = {
     async getUsersIdByToken(token: string){
        try{
            const result: any = jwt.verify(token,settings.JWT_SECRET)  // result = {userId: user._id}
-           return new ObjectId(result.userId)
+           return new ObjectId(result.userId) // <-!!!
        } catch (error){
            return null
        }

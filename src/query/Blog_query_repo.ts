@@ -1,7 +1,7 @@
-import {BlogDbType, blogsCollection, BlogViewType} from "../repositories/db";
-
+import { blogsCollection} from "../repositories/db";
 import {ObjectId, Sort} from "mongodb";
 import {mapBlogToBlogView} from "../repositories/DB_BLOGrepo";
+import {BlogDbType, BlogViewType} from "../repositories/dbTypes/dbBlogType";
 type PaginationWithBlogView ={
     pagesCount: number;
     page: number;

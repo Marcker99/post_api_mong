@@ -1,6 +1,7 @@
 import {ObjectId, WithId} from "mongodb";
-import {CommentsDbType, CommentsViewType} from "../repositories/db";
+
 import {commentDataRepositories} from "../repositories/DB_COMMENTSrepo";
+import {CommentsDbType, CommentsViewType} from "../repositories/dbTypes/dbCommentsTypes";
 
 export const CommentService = {
     async createNewComment(content:string,userId:string,userlogin:string,postId:string):Promise<CommentsViewType>{

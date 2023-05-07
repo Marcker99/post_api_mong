@@ -1,5 +1,6 @@
-import {commentsCollection, CommentsDbType, CommentsViewType, postCollection} from "./db";
+import {commentsCollection,postCollection} from "./db";
 import {ObjectId} from "mongodb";
+import {CommentsDbType, CommentsViewType} from "./dbTypes/dbCommentsTypes";
 
 export function mapCommentsToViewType(commentDb:CommentsDbType):CommentsViewType{
     return {

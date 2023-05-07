@@ -1,8 +1,11 @@
 
 import request from 'supertest'
 import { app } from '../src/settings'
-import {PostViewType, BlogViewType} from "../src/repositories/db";
+
 import {blogDataRepositories} from "../src/repositories/DB_BLOGrepo";
+import {PostViewType} from "../src/repositories/dbTypes/dbPostType";
+import {BlogViewType} from "../src/repositories/dbTypes/dbBlogType";
+import {BlogService} from "../src/domain/blog_service";
 
 
 describe('Post testing', () => {
@@ -12,7 +15,7 @@ describe('Post testing', () => {
     beforeAll(async () => {
         await request(app).delete('/testing/all-data').expect(204)
 
-        dataFromBlogDB = await blogDataRepositories.createNewBlog(
+        dataFromBlogDB = await BlogService.createNewBlog(
             'TestPostApi',
             'randomBlog',
             'https://www.example.com/'

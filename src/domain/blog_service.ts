@@ -1,6 +1,7 @@
 import {blogDataRepositories} from "../repositories/DB_BLOGrepo";
 import {ObjectId, WithId} from "mongodb";
-import {BlogDbType, BlogViewType} from "../repositories/db";
+import {BlogDbType, BlogViewType} from "../repositories/dbTypes/dbBlogType";
+
 
 export const BlogService =  {
 //delete

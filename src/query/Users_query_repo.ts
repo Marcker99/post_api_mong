@@ -1,7 +1,8 @@
 
 import {ObjectId, Sort} from "mongodb";
-import {UserMeViewType, usersCollection, UsersDbType, UsersViewType} from "../repositories/db";
+import { usersCollection} from "../repositories/db";
 import {mapUserDbView} from "../repositories/DB-USERSrepo";
+import {UserMeViewType, UsersDbType, UsersViewType} from "../repositories/dbTypes/dbUserType";
 type PaginationWithUserView ={
     pagesCount: number;
     page: number;
@@ -10,7 +11,7 @@ type PaginationWithUserView ={
     items: UsersViewType [];
 }
 export function mapToUserMeView(user: UsersDbType): UserMeViewType {
-    return { login: user.login,email: user.email,createdAt: user.createdAt }
+    return { login: user.accountData.login,email: user.accountData.email,createdAt: user.accountData.createdAt }
 }
 
 export const usersQueryCollection = {
@@ -44,7 +45,7 @@ export const usersQueryCollection = {
            .skip((pageNum - 1) * limitNum)
            .limit(limitNum)
            .toArray();  //!!!!!!
-       const usersViews: UsersViewType[] = users.map((user) => mapUserDbView(user)); //[{}] each elem
+       const usersViews: UsersViewType[] = users.map((user) => mapUserDbView(user)); //[{}] each elem(import)
        return  {
            pagesCount,
            page: pageNum,

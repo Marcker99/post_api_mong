@@ -1,5 +1,6 @@
-import {BlogDbType, blogsCollection, BlogViewType} from "./db";
+import { blogsCollection} from "./db";
 import {ObjectId, WithId} from "mongodb";
+import {BlogDbType, BlogViewType} from "./dbTypes/dbBlogType";
 
 export function mapBlogToBlogView(blog: BlogDbType): BlogViewType {
     return { id: blog._id.toString(),name: blog.name,description: blog.description,websiteUrl: blog.websiteUrl,

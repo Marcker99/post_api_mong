@@ -67,3 +67,16 @@ export const checkEmail = body('email')
         message: "incorrect email",
         field: "email"
     })
+
+export const checkConfirmCode = body('code')
+    .exists()
+    .withMessage({
+        message: "code is required.",
+        field: "code"
+    })
+    .bail()
+    .isString()
+    .withMessage({
+        message:"Code must be a string.",
+        field: "code"
+    })

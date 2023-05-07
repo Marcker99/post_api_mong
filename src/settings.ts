@@ -3,8 +3,9 @@ import {blogsRoutes} from "./routes/blogs-routes";
 import {postRoutes} from "./routes/post-routes";
 import {clearRout} from "./routes/clearDB";
 import {usersRouter} from "./routes/users-router";
-import {authenticationRouters} from "./routes/authentication-routers";
+import {authenticationRouter} from "./routes/authentication-router";
 import {commentsRouter} from "./routes/comments-router";
+
 
 export const app = express()
 
@@ -16,9 +17,10 @@ app.use('/posts',postRoutes)
 
 app.use('/users',usersRouter)
 
-app.use('/auth',authenticationRouters)
+app.use('/auth',authenticationRouter)
 
 app.use('/comments',commentsRouter)
+
 //test/////////////////////////////////////////
 app.use('/testing',clearRout)
 
@@ -30,5 +32,7 @@ app.get('/', (req: Request, res: Response) => {
 //todo question???
 export const settings = {
     MONGO_URI: process.env.MONGO_URL || 'mongodb://0.0.0.0:27017',
-    JWT_SECRET: process.env.JWT_SECRET || '123'
+    JWT_SECRET: process.env.JWT_SECRET || '123',
+    SENDER_ADRESS: process.env.SENDER_ADRESS ,
+    SENDER_PASS: process.env.SENDER_PASS
 }
