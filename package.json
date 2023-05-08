@@ -16,8 +16,6 @@
     "uuid": "^9.0.0"
   },
   "scripts": {
-    "start": "node dist/index.js",
-    "build": "tsc",
     "dev": "yarn nodemon --inspect dist/index.js",
     "watch": "tsc -w",
     "jest": "jest -i"
