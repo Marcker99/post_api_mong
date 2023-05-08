@@ -80,3 +80,10 @@ export const checkConfirmCode = body('code')
         message:"Code must be a string.",
         field: "code"
     })
+    .bail()
+    .trim()
+    .isLength({ min: 10,max: 60})
+    .withMessage({
+        message: "incorrect code",
+        field: "code"
+    })
