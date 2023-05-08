@@ -55,7 +55,8 @@ authenticationRouter.post('/registration-email-resending',checkEmail, errorsMidd
        let resent = await UserService.resendingEmail(req.body.email)
        if(!resent){
            res.send(400)
-       } else {
+       }
+       else {
            res.send(204)
        }
     })

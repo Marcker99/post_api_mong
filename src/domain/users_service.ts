@@ -101,6 +101,9 @@ export const UserService = {
         if(!user){
             return false
         }
+        if(user.emailConfirmation.isConfirmed){
+            return false
+        }
         try{
             await EmailManager.userConfirmedMail(user)
         }catch (e) {
