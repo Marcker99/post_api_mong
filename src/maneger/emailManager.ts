@@ -7,5 +7,6 @@ export const EmailManager = {
     async userConfirmedMail(userData:UsersDbType){
         const info = await EmailAdapter.sendConfirmCode(userData)
         return info
-    }
+    },
+
 }

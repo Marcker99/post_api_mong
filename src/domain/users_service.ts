@@ -39,10 +39,10 @@ export const UserService = {
         try{
             await EmailManager.userConfirmedMail(newUser)
         }catch (e) {
-            if(!e){
+
                 //await this.removeUserById(createdUser.id)
                 return null
-            }
+
         }
         return  createdUser
     },
@@ -107,10 +107,10 @@ export const UserService = {
         try{
             await EmailManager.userConfirmedMail(user)
         }catch (e) {
-            if(!e){
+
                 //await this.removeUserById(user._id.toString())
                 return false
-            }
+
         }
         return  true
     }
