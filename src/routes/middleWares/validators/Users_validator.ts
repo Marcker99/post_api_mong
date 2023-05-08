@@ -78,12 +78,12 @@ export const checkConfirmCode = body('code')
     .isString()
     .withMessage({
         message:"Code must be a string.",
-        field: "code"
+
     })
     .bail()
     .trim()
     .isLength({ min: 10,max: 60})
     .withMessage({
         message: "incorrect code",
-        field: "code"
+
     })
