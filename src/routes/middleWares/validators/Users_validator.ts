@@ -103,7 +103,7 @@ export const checkConfirmCode = body('code')
 export const emailConfirmation = body('email')
 .custom(async (value, {req:Request}) =>{
     const confirming = await UserService.checkEmailConfirmation(value)
-    if(confirming){
+    if(!confirming){
         throw new Error();
     }
     return true
