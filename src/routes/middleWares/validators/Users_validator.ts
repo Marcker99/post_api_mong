@@ -90,7 +90,7 @@ export const checkConfirmCode = body('code')
     })
     .bail()
     .custom(async (value, { req }) => {
-        const currentCode = UserService.checkUsersDataBeforeConfirmation(value)
+        const currentCode = await UserService.checkUsersDataBeforeConfirmation(value)
         if (!currentCode) {
             throw new Error();
         }
