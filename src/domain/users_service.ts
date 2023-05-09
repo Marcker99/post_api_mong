@@ -76,17 +76,25 @@ export const UserService = {
         return await userDataRepositories.getById(userId)
     },
 
-    async confirmationUser(confirmCode:string):Promise<boolean> {
-        const user = await userDataRepositories.findUserByConfirmationCode(confirmCode)
+    async checkUsersDataBeforeConfirmation(code:string){
+        const user = await userDataRepositories.findUserByConfirmationCode(code)
         if(!user){return false}
-        if(user.emailConfirmation.confirmationCode !== confirmCode){return false}
         if(user.emailConfirmation.isConfirmed){return false}
+        if(user.emailConfirmation.confirmationCode !== code){return false}
         if(user.emailConfirmation.expirationDate < new Date()){
-            //await this.removeUserById(user._id.toString())todo
             return false
+        } else {
+            return true
         }
 
-        const confirmed = await userDataRepositories.userConfirming(user._id)
+    },
+
+    async confirmationUser(confirmCode:string):Promise<boolean> {
+        const user = await userDataRepositories.findUserByConfirmationCode(confirmCode)
+        if(!user){
+            return false
+        }
+        const confirmed = await userDataRepositories.confirmingUser(user._id)
         if(!confirmed){
             return false
         } else {
@@ -97,11 +105,11 @@ export const UserService = {
 
 
     async resendingEmail(email: string): Promise<boolean>{
-        let user = await userDataRepositories.checkUsersEmail(email)
+        let user = await userDataRepositories.getUserByEmail(email)
         if(!user){
             return false
         }
-        if(user.emailConfirmation.isConfirmed){
+        if(user.emailConfirmation.isConfirmed){ //todo something?
             return false
         }
         try{
@@ -113,7 +121,8 @@ export const UserService = {
 
         }
         return  true
-    }
+    },
+
 
 
 }

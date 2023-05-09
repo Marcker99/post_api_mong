@@ -38,13 +38,13 @@ async findUserByConfirmationCode(confCode:string):Promise<UsersDbType | null>{
 },
 
 
-    async userConfirming(id:ObjectId){
+    async confirmingUser(id:ObjectId){
         let result =
             await usersCollection.updateOne({_id: id},{ $set: {'emailConfirmation.isConfirmed': true}})
         return result.modifiedCount === 1
     } ,
 
-    async checkUsersEmail(email:string):Promise<UsersDbType | null>{
+    async getUserByEmail(email:string):Promise<UsersDbType | null>{
 
         const result = await usersCollection.findOne({ 'accountData.email': email } )
         return result

@@ -1,6 +1,8 @@
 
 
 import {body} from "express-validator";
+import {ObjectId} from "mongodb";
+import {UserService} from "../../../domain/users_service";
 
 export const checkLogin = body('login')
     .exists()
@@ -85,5 +87,15 @@ export const checkConfirmCode = body('code')
     .isLength({ min: 10,max: 60})
     .withMessage({
         message: "incorrect code",
-
+    })
+    .bail()
+    .custom(async (value, { req }) => {
+        const currentCode = UserService.checkUsersDataBeforeConfirmation(value)
+        if (!currentCode) {
+            throw new Error();
+        }
+        return true;
+    })
+    .withMessage({
+        message: "incorrect code",
     })
