@@ -115,7 +115,7 @@ export const emailConfirmation = body('email')
 export const checkEmailExistingBeforeReg = body('email')
 .custom(async (value,{req:Request}) =>{
     const existEmail = await UserService.checkUsersDataExisting(value)
-    if(value){
+    if(existEmail){
         throw new Error();
     }
     return true
