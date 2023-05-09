@@ -33,8 +33,8 @@ export const usersQueryCollection = {
 
           const loginEmailFilter = {
               $or: [
-                  { login: { $regex: new RegExp(searchLogin, 'i') } },
-                  { email: { $regex: new RegExp(searchEmail, 'i') } }
+                  { 'accountData.login': { $regex: new RegExp(searchLogin, 'i') } },
+                  { 'accountData.email': { $regex: new RegExp(searchEmail, 'i') } }
               ]
           };
               //total count

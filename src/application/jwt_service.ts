@@ -6,7 +6,7 @@ import {UsersDbType} from "../repositories/dbTypes/dbUserType";
 export const jwtService = {
     async createJWT(user: UsersDbType){
 
-        const token = jwt.sign({userId: user._id},settings.JWT_SECRET,{expiresIn: '10m'})
+        const token = jwt.sign({userId: user._id},settings.JWT_SECRET,{expiresIn: '40m'})
         return {
             accessToken: token
         }

@@ -4,14 +4,14 @@ import {commentDataRepositories} from "../repositories/DB_COMMENTSrepo";
 import {CommentsDbType, CommentsViewType} from "../repositories/dbTypes/dbCommentsTypes";
 
 export const CommentService = {
-    async createNewComment(content:string,userId:string,userlogin:string,postId:string):Promise<CommentsViewType>{
+    async createNewComment(content:string, userId:string, userLogin:string, postId:string):Promise<CommentsViewType>{
         const newComment:WithId<CommentsDbType> = {
                  _id: new ObjectId(),
                  content: content,
                  postId: postId,
                 commentatorInfo:{
                   userId:userId,
-                  userLogin:userlogin,
+                  userLogin:userLogin,
                 },
                  createdAt: new Date().toISOString()
         }
