@@ -6,7 +6,13 @@ import {jwtService} from "../application/jwt_service";
 import {authenticationMiddleware} from "./middleWares/authentication_middleware";
 import {usersQueryCollection} from "../query/Users_query_repo";
 import {UsersDbType} from "../repositories/dbTypes/dbUserType";
-import {checkConfirmCode, checkEmail, checkLogin, checkPass} from "./middleWares/validators/Users_validator";
+import {
+    checkConfirmCode,
+    checkEmail,
+    checkLogin,
+    checkPass,
+    emailConfirmation
+} from "./middleWares/validators/Users_validator";
 
 
 export const authenticationRouter = Router({})
@@ -50,7 +56,7 @@ authenticationRouter.post('/registration-confirmation',checkConfirmCode,errorsMi
     } else {res.send(204)}
 })
 
-authenticationRouter.post('/registration-email-resending',checkEmail, errorsMiddleware,
+authenticationRouter.post('/registration-email-resending',checkEmail,emailConfirmation, errorsMiddleware,
     async (req:Request, res:Response)=> {
        let resent = await UserService.resendingEmail(req.body.email)
        if(!resent){

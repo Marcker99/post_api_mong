@@ -99,3 +99,15 @@ export const checkConfirmCode = body('code')
     .withMessage({
         message: "incorrect code",
     })
+
+export const emailConfirmation = body('email')
+.custom(async (value, {req:Request}) =>{
+    const confirming = await UserService.checkEmailConfirmation(value)
+    if(confirming){
+        throw new Error();
+    }
+    return true
+})
+.withMessage({
+    message: "email was confirmed"
+})

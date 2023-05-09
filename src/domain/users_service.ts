@@ -104,24 +104,33 @@ export const UserService = {
     },
 
 
+    async checkEmailConfirmation(email:string){
+        let user = await userDataRepositories.getUserByEmail(email)
+        if(!user){
+            return false
+        }
+        if(user.emailConfirmation.isConfirmed){
+            return false
+        } else {
+            return true
+        }
+
+    } ,
+
     async resendingEmail(email: string): Promise<boolean>{
         let user = await userDataRepositories.getUserByEmail(email)
         if(!user){
             return false
         }
-        if(user.emailConfirmation.isConfirmed){ //todo something?
-            return false
-        }
         try{
             await EmailManager.userConfirmedMail(user)
         }catch (e) {
-
-                //await this.removeUserById(user._id.toString())
                 return false
 
         }
         return  true
     },
+
 
 
 
