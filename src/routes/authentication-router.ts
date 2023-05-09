@@ -9,7 +9,7 @@ import {UsersDbType} from "../repositories/dbTypes/dbUserType";
 import {
     checkConfirmCode,
     checkEmail, checkEmailExistingBeforeReg,
-    checkLogin,
+    checkLogin, checkLoginExistingBeforeReg,
     checkPass,
     emailConfirmation
 } from "./middleWares/validators/Users_validator";
@@ -38,7 +38,7 @@ authenticationRouter.get('/me',authenticationMiddleware,async (req:Request, res:
 
 
 authenticationRouter.post('/registration',checkLogin, checkPass,
-    checkEmail,checkEmailExistingBeforeReg, errorsMiddleware, async (req:Request, res:Response) =>{
+    checkEmail,checkEmailExistingBeforeReg,checkLoginExistingBeforeReg, errorsMiddleware, async (req:Request, res:Response) =>{
         const user = await UserService.createNewUser(req.body.login, req.body.password,req.body.email)
         if(!user){
             res.send(400)

@@ -123,3 +123,15 @@ export const checkEmailExistingBeforeReg = body('email')
 .withMessage({
     message: "it email is exists"
 })
+
+export const checkLoginExistingBeforeReg = body('login')
+    .custom(async (value,{req:Request}) =>{
+        const existEmail = await UserService.checkUsersDataExisting(value)
+        if(existEmail){
+            throw new Error();
+        }
+        return true
+    })
+    .withMessage({
+        message: "it login is exists"
+    })
