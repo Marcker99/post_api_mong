@@ -131,6 +131,15 @@ export const UserService = {
         return  true
     },
 
+    async checkUsersDataExisting(emailOrLogin:string){
+        const user = await userDataRepositories.checkUsersLoginOrEmailData(emailOrLogin)
+        if(user){
+            return false
+        } else {
+            return true
+        }
+    }
+
 
 
 

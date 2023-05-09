@@ -8,7 +8,7 @@ import {usersQueryCollection} from "../query/Users_query_repo";
 import {UsersDbType} from "../repositories/dbTypes/dbUserType";
 import {
     checkConfirmCode,
-    checkEmail,
+    checkEmail, checkEmailExistingBeforeReg,
     checkLogin,
     checkPass,
     emailConfirmation
@@ -38,7 +38,7 @@ authenticationRouter.get('/me',authenticationMiddleware,async (req:Request, res:
 
 
 authenticationRouter.post('/registration',checkLogin, checkPass,
-    checkEmail, errorsMiddleware, async (req:Request, res:Response) =>{
+    checkEmail,checkEmailExistingBeforeReg, errorsMiddleware, async (req:Request, res:Response) =>{
         const user = await UserService.createNewUser(req.body.login, req.body.password,req.body.email)
         if(!user){
             res.send(400)

@@ -23,7 +23,7 @@ export const EmailAdapter = {
                 </p>`
         }
 
-        return transporter.sendMail(message)
+        return transporter.sendMail(message) //true
 
     },
 /*

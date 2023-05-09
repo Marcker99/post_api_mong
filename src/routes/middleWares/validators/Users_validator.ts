@@ -111,3 +111,15 @@ export const emailConfirmation = body('email')
 .withMessage({
     message: "email was confirmed"
 })
+
+export const checkEmailExistingBeforeReg = body('email')
+.custom(async (value,{req:Request}) =>{
+    const existEmail = await UserService.checkUsersDataExisting(value)
+    if(value){
+        throw new Error();
+    }
+    return true
+})
+.withMessage({
+    message: "it email is exists"
+})
