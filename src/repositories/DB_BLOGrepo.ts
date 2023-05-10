@@ -8,7 +8,13 @@ export function mapBlogToBlogView(blog: BlogDbType): BlogViewType {
 }
 
 export const blogDataRepositories =  {
-    
+    async getBlogById(id: string): Promise<BlogDbType | null> {
+        if(!ObjectId.isValid(id)) {
+            return null
+        }
+
+        return blogsCollection.findOne({_id: new ObjectId(id)})
+    },
 //delete
 async removeBlogById(id: string ):Promise<boolean> {
    const res = await blogsCollection.deleteOne({_id:new ObjectId(id)})

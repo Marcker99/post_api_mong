@@ -33,8 +33,14 @@ blogsRoutes.post('/',
     checkUrl,
     errorsMiddleware,
     async (req: Request, res: Response) => {
+    try {
         const newBlog:BlogViewType = await BlogService.createNewBlog(req.body.name, req.body.description, req.body.websiteUrl)
         res.status(201).send(newBlog)
+    } catch (e) {
+        console.log(e)
+        res.sendStatus(500)
+    }
+
     })
 //get by id
 blogsRoutes.get('/:id',isIdValid , async (req: Request, res: Response) => {

@@ -53,7 +53,12 @@ async findUserByConfirmationCode(confCode:string):Promise<UsersDbType | null>{
 
     async clearAll(){
    return  usersCollection.deleteMany({})
-}
+},
+  async updateUserCode(id:ObjectId,code:string):Promise<boolean>{
+      let result =
+          await usersCollection.updateOne({_id: id},{ $set: {'emailConfirmation.confirmationCode': code}})
+      return result.modifiedCount === 1
+  }
 
 }
 

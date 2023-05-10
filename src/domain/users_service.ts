@@ -18,6 +18,7 @@ export const UserService = {
 
         const genSalt = await bcrypt.genSalt(10)
         const usersHash = await this._generateHash(password,genSalt)
+        const code = uuidv4()
         const newUser:WithId<UsersDbType> = {
             _id: new ObjectId(),
                 accountData: {
@@ -27,7 +28,7 @@ export const UserService = {
                     hash: usersHash,
                     createdAt: new Date().toISOString()},
             emailConfirmation: {
-                confirmationCode: uuidv4(),
+                confirmationCode: code,
                 expirationDate: add(new Date(),{
                     hours: 1,
                     minutes: 3
@@ -37,7 +38,7 @@ export const UserService = {
         }
         const createdUser = await userDataRepositories.createNewUser(newUser)
         try{
-            await EmailManager.userConfirmedMail(newUser)
+            await EmailManager.userConfirmingMail(email, code)
         }catch (e) {
 
                 //await this.removeUserById(createdUser.id)
@@ -143,12 +144,18 @@ export const UserService = {
 
     async resendingEmail(email: string): Promise<boolean>{
         let user = await userDataRepositories.getUserByEmail(email)
+        let code = uuidv4()
         if(!user){
             return false
         }
+        let isUpdated = await userDataRepositories.updateUserCode(user._id,code)
+        if(!isUpdated){
+            return false
+        }
         try{
-            await EmailManager.userConfirmedMail(user)
+            await EmailManager.userConfirmingMail(user.accountData.email,code)
         }catch (e) {
+            console.log(e)
                 return false
 
         }

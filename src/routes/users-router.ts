@@ -26,6 +26,7 @@ export const usersRouter = Router({})
         checkEmail,
         errorsMiddleware,async (req:Request,res:Response) =>{
            const createdUser = await UserService.createUserByAdmin(req.body.login, req.body.password,req.body.email)
+            //queryRepo.getUserById(createdUserId)
             res.status(201).send(createdUser)
         });
 

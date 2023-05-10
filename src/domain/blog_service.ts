@@ -20,6 +20,7 @@ export const BlogService =  {
             isMembership: false
         }
         const createdBlog = await blogDataRepositories.createNewBlog(newBlog)
+
         return  createdBlog
     },
 //update
