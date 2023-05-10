@@ -1,5 +1,6 @@
 import {Router,Request,Response} from "express";
-import {checkLoginOrEmail, checkPassword} from "./middleWares/validators/LogAuth_validator";
+import {checkLoginOrEmail, checkPassword,checkConfirmCode,checkEmailExistingBeforeReg,checkLoginExistingBeforeReg,
+    emailConfirmation} from "./middleWares/validators/LogAuth_validator";
 import {errorsMiddleware} from "./middleWares/errors_Middleware";
 import {UserService} from "../domain/users_service";
 import {jwtService} from "../application/jwt_service";
@@ -7,11 +8,9 @@ import {authenticationMiddleware} from "./middleWares/authentication_middleware"
 import {usersQueryCollection} from "../query/Users_query_repo";
 import {UsersDbType} from "../repositories/dbTypes/dbUserType";
 import {
-    checkConfirmCode,
-    checkEmail, checkEmailExistingBeforeReg,
-    checkLogin, checkLoginExistingBeforeReg,
+    checkEmail,
+    checkLogin,
     checkPass,
-    emailConfirmation
 } from "./middleWares/validators/Users_validator";
 
 

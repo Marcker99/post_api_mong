@@ -47,6 +47,30 @@ export const UserService = {
         return  createdUser
     },
 
+    async createUserByAdmin(login:string,password:string,email:string):Promise<UsersViewType | null>{
+            const salt = await bcrypt.genSalt(10)
+            const usersHash = await this._generateHash(password,salt)
+            const newUser:WithId<UsersDbType> = {
+            _id: new ObjectId(),
+            accountData: {
+                login: login,
+                email: email,
+                salt: salt,
+                hash: usersHash,
+                createdAt: new Date().toISOString()},
+            emailConfirmation: {
+                confirmationCode: uuidv4(),
+                expirationDate: add(new Date(),{
+                    hours: 1,
+                    minutes: 3
+                }),
+                isConfirmed: true,
+            }
+        }
+        const createdUserByAdmin = await userDataRepositories.createNewUser(newUser)
+         return createdUserByAdmin
+    },
+
 
     async checkCredentials(logEmail:string,password:string){
         const user = await userDataRepositories.checkUsersLoginOrEmailData(logEmail)

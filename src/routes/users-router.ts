@@ -25,7 +25,7 @@ export const usersRouter = Router({})
         checkPass,
         checkEmail,
         errorsMiddleware,async (req:Request,res:Response) =>{
-           const createdUser = await UserService.createNewUser(req.body.login, req.body.password,req.body.email)
+           const createdUser = await UserService.createUserByAdmin(req.body.login, req.body.password,req.body.email)
             res.status(201).send(createdUser)
         });
 
