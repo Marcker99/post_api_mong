@@ -13,7 +13,7 @@ export const EmailAdapter = {
             }
         });
 
-        let message = {
+        /*let message = {
             from: 'Andrew<settings.SENDER_ADRESS>',
             to: userData.accountData.email,//user email
             subject: 'confirmation',
@@ -22,6 +22,16 @@ export const EmailAdapter = {
                 <a href=https://somesite.com/confirm-email?code=${confCode}>complete registration</a>\n
                 </p>`
         }
+
+         */
+        let message = {
+            from: 'Andrew<settings.SENDER_ADRESS>',
+            to: userData.accountData.email, // user email
+            subject: 'confirmation',
+            html: `<h1>Thank you for your registration</h1>
+         <p>To finish registration, please follow the link below:</p>
+         <a href='https://some-front.com/confirm-registration?code=${confCode}'>Complete registration</a>`
+        };
 
         return transporter.sendMail(message) //true
 
