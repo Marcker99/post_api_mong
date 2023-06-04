@@ -23,7 +23,7 @@ authenticationRouter.post('/login',checkLoginOrEmail,checkPassword,errorsMiddlew
     if(user){
         const token = await jwtService.createJWT(user)
         const refToken = await jwtService.createRefreshJwt(user)
-        res.cookie('refresh_token',refToken,{httpOnly: true,secure: false,})
+        res.cookie('refresh_token',refToken,{httpOnly: true,secure: true,})
         res.status(200).send(token)
     } else {
         res.sendStatus(401)
