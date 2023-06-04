@@ -49,7 +49,7 @@ authenticationRouter.post('/refresh-token',checkRefreshToken, async (req:Request
     if(!result){
         res.sendStatus(401)
     }
-    res.cookie('refreshToken',result?.refresh.refreshToken,{httpOnly: true,secure: false,})
+    res.cookie('refreshToken',result?.refresh.refreshToken,{secure: true,httpOnly: true})
     res.send(result?.accsess.accessToken)
 
 })
