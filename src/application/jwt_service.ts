@@ -8,7 +8,9 @@ export type Tokens = {
     accsess: {
         accessToken: string;
     }
-    refresh:string;
+    refresh: {
+        refreshToken: string
+    };
 } //?
 
 export const jwtService = {
@@ -20,17 +22,19 @@ export const jwtService = {
         }
     },
     async createRefreshJwt(user: UsersDbType){
-        const refreshToken = jwt.sign({userId: user._id},settings.REF_SECRET,{expiresIn: '20s'})
+        const token = jwt.sign({userId: user._id},settings.REF_SECRET,{expiresIn: '20s'})
         const newToken: WithId<RefreshTDbType> = {
             _id: new ObjectId(),
             subject:{
                 userId: user._id,
-                token: refreshToken,
+                token: token,
             },
             isValid:true
         }
         await refreshRepo.createNewToken(newToken) //try catch
-        return refreshToken
+        return {
+            refreshToken: token
+        }
     },
     async getUsersIdByToken(token: string){
        try{
