@@ -4,7 +4,7 @@ import {NextFunction,Request,Response} from "express";
 
 
 export const checkRefreshToken = async (req:Request,res:Response,next:NextFunction) =>{
-    const refresh = req.cookies.refresh_token
+    const refresh = req.cookies.refreshToken
     if(!refresh){
         res.sendStatus(401)
         return

@@ -23,7 +23,7 @@ authenticationRouter.post('/login',checkLoginOrEmail,checkPassword,errorsMiddlew
     if(user){
         const token = await jwtService.createJWT(user)
         const refToken = await jwtService.createRefreshJwt(user)
-        res.cookie('refresh_token',refToken,{httpOnly: true,secure: true,})
+        res.cookie('refreshToken',refToken,{httpOnly: true,secure: true,})
         res.status(200).send(token)
     } else {
         res.sendStatus(401)
@@ -43,20 +43,20 @@ authenticationRouter.get('/me',authenticationMiddleware,async (req:Request, res:
 authenticationRouter.post('/refresh-token',checkRefreshToken, async (req:Request, res:Response)=>{
 
     const user: UsersDbType = req!.user
-    const refToken = req.cookies.refresh_token
+    const refToken = req.cookies.refreshToken
     const result: Tokens | null = await jwtService.getNewTokens(user,refToken)
     console.log(result)
     if(!result){
         res.sendStatus(401)
     }
-    res.cookie('refresh_token',result?.refresh,{httpOnly: true,secure: false,})
+    res.cookie('refreshToken',result?.refresh,{httpOnly: true,secure: false,})
     res.send(result?.accsess)
 
 })
 authenticationRouter.post('/logout',checkRefreshToken, async (req:Request, res:Response)=>{
-    const refresh_token = req.cookies.refresh_token
+    const refresh_token = req.cookies.refreshToken
     const result = await jwtService.deactivateRefreshToken(refresh_token)
-    res.clearCookie('refresh_token').sendStatus(204)
+    res.clearCookie('refreshToken').sendStatus(204)
 })
 
 authenticationRouter.post('/registration',checkLogin, checkPass,
