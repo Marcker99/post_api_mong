@@ -55,7 +55,7 @@ export const jwtService = {
     },
 
     async getNewTokens(user:UsersDbType,token:string):Promise<Tokens | null> {
-       const refTokenData: RefreshTDbType | null = await refreshRepo.getTokenByToken(token)//todo по токену
+       const refTokenData: RefreshTDbType | null = await refreshRepo.getTokenByToken(token)
         console.log(refTokenData)
        if(!refTokenData){
            return null
@@ -63,7 +63,7 @@ export const jwtService = {
        if(!refTokenData.isValid){
            return null
        }
-       const deactivate = this.deactivateRefreshToken(refTokenData._id)
+       const deactivate = await this.deactivateRefreshToken(refTokenData._id)
        if(!deactivate){
            return null
        }
