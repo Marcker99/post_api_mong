@@ -5,11 +5,13 @@ import {clearRout} from "./routes/clearDB";
 import {usersRouter} from "./routes/users-router";
 import {authenticationRouter} from "./routes/authentication-router";
 import {commentsRouter} from "./routes/comments-router";
-
+import cookieParser from 'cookie-parser'
 
 export const app = express()
 
 app.use(express.json())
+
+app.use(cookieParser())
 
 app.use('/blogs',blogsRoutes)
 
@@ -33,6 +35,8 @@ app.get('/', (req: Request, res: Response) => {
 export const settings = {
     MONGO_URI: process.env.MONGO_URL || 'mongodb://0.0.0.0:27017',
     JWT_SECRET: process.env.JWT_SECRET || '123',
+    REF_SECRET: process.env.REF_SECRET || 'qwerty123',
     SENDER_ADRESS: process.env.SENDER_ADRESS ,
     SENDER_PASS: process.env.SENDER_PASS
+
 }

@@ -2,7 +2,7 @@ import {ObjectId, WithId} from "mongodb";
 import {userDataRepositories} from "../repositories/DB-USERSrepo";
 import bcrypt from "bcrypt"
 import {UsersDbType, UsersViewType} from "../repositories/dbTypes/dbUserType";
-import {v4 as uuidv4} from "uuid"
+import {v4 as uuidv4} from "uuid" //uuid.v4() alias uuidv4
 import add from "date-fns/add"
 import {EmailManager} from "../maneger/emailManager";
 
@@ -73,7 +73,7 @@ export const UserService = {
     },
 
 
-    async checkCredentials(logEmail:string,password:string){
+    async  checkCredentials(logEmail:string,password:string){
         const user = await userDataRepositories.checkUsersLoginOrEmailData(logEmail)
         if(!user){
             return null

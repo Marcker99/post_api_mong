@@ -3,7 +3,7 @@ import {checkLoginOrEmail, checkPassword,checkConfirmCode,checkEmailExistingBefo
     emailConfirmation} from "./middleWares/validators/LogAuth_validator";
 import {errorsMiddleware} from "./middleWares/errors_Middleware";
 import {UserService} from "../domain/users_service";
-import {jwtService} from "../application/jwt_service";
+import {jwtService, Tokens} from "../application/jwt_service";
 import {authenticationMiddleware} from "./middleWares/authentication_middleware";
 import {usersQueryCollection} from "../query/Users_query_repo";
 import {UsersDbType} from "../repositories/dbTypes/dbUserType";
@@ -12,6 +12,7 @@ import {
     checkLogin,
     checkPass,
 } from "./middleWares/validators/Users_validator";
+import {checkRefreshToken} from "./middleWares/chekRefreshToken";
 
 
 export const authenticationRouter = Router({})
@@ -21,6 +22,8 @@ authenticationRouter.post('/login',checkLoginOrEmail,checkPassword,errorsMiddlew
     const user = await UserService.checkCredentials(req.body.loginOrEmail, req.body.password)
     if(user){
         const token = await jwtService.createJWT(user)
+        const refToken = await jwtService.createRefreshJwt(user)
+        res.cookie('refresh_token',refToken,{httpOnly: true,secure: false,})
         res.status(200).send(token)
     } else {
         res.sendStatus(401)
@@ -36,6 +39,26 @@ authenticationRouter.get('/me',authenticationMiddleware,async (req:Request, res:
 })
 
 
+
+authenticationRouter.post('/refresh-token',checkRefreshToken, async (req:Request, res:Response)=>{
+
+    const user: UsersDbType = req!.user
+    const refToken = req.cookies.refresh_token
+    const result: Tokens | null = await jwtService.getNewTokens(user,refToken)
+    console.log(result)
+    if(!result){
+        res.sendStatus(401)
+    }
+    res.cookie('refresh_token',result?.refresh,{httpOnly: true,secure: false,})
+    res.send(result?.accsess)
+
+})
+authenticationRouter.post('/logout',checkRefreshToken, async (req:Request, res:Response)=>{
+    const refresh_token = req.cookies.refresh_token
+    const result = await jwtService.deactivateRefreshToken(refresh_token)
+    res.clearCookie('refresh_token').sendStatus(204)
+})
+
 authenticationRouter.post('/registration',checkLogin, checkPass,
     checkEmail,checkEmailExistingBeforeReg,checkLoginExistingBeforeReg, errorsMiddleware, async (req:Request, res:Response) =>{
         const user = await UserService.createNewUser(req.body.login,req.body.password,req.body.email)
@@ -48,12 +71,16 @@ authenticationRouter.post('/registration',checkLogin, checkPass,
 
     })
 
+
+
 authenticationRouter.post('/registration-confirmation',checkConfirmCode,errorsMiddleware,
     async (req:Request,res:Response) =>{
      let confirmation = await UserService.confirmationUser(req.body.code)
     if(!confirmation){res.send(400)
     } else {res.send(204)}
 })
+
+
 
 authenticationRouter.post('/registration-email-resending',checkEmail,emailConfirmation, errorsMiddleware,
     async (req:Request, res:Response)=> {

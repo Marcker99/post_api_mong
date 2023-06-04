@@ -3,7 +3,8 @@ import dotenv from 'dotenv'
 import {BlogDbType} from "./dbTypes/dbBlogType";
 import {PostDbType} from "./dbTypes/dbPostType";
 import {UsersDbType} from "./dbTypes/dbUserType";
-import {CommentsDbType} from "./dbTypes/dbCommentsTypes"; //env
+import {CommentsDbType} from "./dbTypes/dbCommentsTypes";
+import {RefreshTDbType} from "./dbTypes/dbRefreshToken"; //env
 dotenv.config() //env ?init
 const mongoURI = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017'
 export const client = new MongoClient(mongoURI) //switch db
@@ -28,3 +29,5 @@ export const postCollection = dbBlog_Post.collection<PostDbType>('posts') // sho
 export const usersCollection = dbBlog_Post.collection<UsersDbType>('users')
 //COMMENTS
 export const commentsCollection = dbBlog_Post.collection<CommentsDbType>('comments')
+//REFRESH
+export const tokenCollection = dbBlog_Post.collection<RefreshTDbType>('refreshTokens')
