@@ -49,8 +49,8 @@ authenticationRouter.post('/refresh-token',checkRefreshToken, async (req:Request
     if(!result){
         res.sendStatus(401)
     }
-    res.cookie('refreshToken',result?.refresh,{httpOnly: true,secure: false,})
-    res.send(result?.accsess)
+    res.cookie('refreshToken',result?.refresh.refreshToken,{httpOnly: true,secure: false,})
+    res.send(result?.accsess.accessToken)
 
 })
 authenticationRouter.post('/logout',checkRefreshToken, async (req:Request, res:Response)=>{
