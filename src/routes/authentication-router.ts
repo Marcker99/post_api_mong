@@ -45,10 +45,10 @@ authenticationRouter.post('/refresh-token',checkRefreshToken, async (req:Request
     const user: UsersDbType = req!.user
     const refToken = req.cookies.refreshToken
     const result: Tokens | null = await jwtService.getNewTokens(user,refToken)
-    console.log(result)
-    if(!result){
+    if(!result?.refresh || !result.accsess){
         res.sendStatus(401)
     }
+
     res.cookie('refreshToken',result?.refresh.refreshToken,{secure: true,httpOnly: true})
     res.send(result?.accsess.accessToken)
 
