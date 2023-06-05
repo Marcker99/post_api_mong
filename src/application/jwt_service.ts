@@ -55,19 +55,7 @@ export const jwtService = {
     },
 
     async getNewTokens(user:UsersDbType,token:string):Promise<Tokens | null> {
-       const refTokenData: RefreshTDbType | null = await refreshRepo.getTokenByToken(token)
-        console.log(refTokenData)
-       if(!refTokenData){
-           return null
-       }
-       if(!refTokenData.isValid){
-           return null
-       }
-       const deactivate = await this.deactivateRefreshToken(refTokenData._id)
-       if(!deactivate){
-           return null
-       }
-
+    await this.deactivateRefreshToken(token)
         const accsess = await this.createJWT(user)
         const refresh = await this.createRefreshJwt(user)
 
@@ -78,8 +66,8 @@ export const jwtService = {
        return result
 
     },
-    async deactivateRefreshToken(id:ObjectId){
-        const result = await refreshRepo.deactivateToken(id)
+    async deactivateRefreshToken(token :string){
+        const result = await refreshRepo.deactivateToken(token)
         return result
     }
 

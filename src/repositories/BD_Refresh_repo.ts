@@ -1,13 +1,14 @@
 import {RefreshTDbType} from "./dbTypes/dbRefreshToken";
-import {tokenCollection} from "./db";
+import {tokenBLCollection, tokenCollection} from "./db";
 import {ObjectId} from "mongodb";
+import {BlacklistRefToken} from "./dbTypes/blackLystRefToken";
 
 export const refreshRepo = {
     async createNewToken(token:RefreshTDbType){
         return await  tokenCollection.insertOne(token)
         },
-    async deactivateToken(idToken:ObjectId){
-         const res = await tokenCollection.updateOne({_id: idToken},{$set: {isValid: false}})
+    async deactivateToken(token:string){
+         const res = await tokenBLCollection.insertOne({token:token})
         return res
     },
 

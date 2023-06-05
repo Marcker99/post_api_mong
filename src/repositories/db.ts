@@ -4,7 +4,8 @@ import {BlogDbType} from "./dbTypes/dbBlogType";
 import {PostDbType} from "./dbTypes/dbPostType";
 import {UsersDbType} from "./dbTypes/dbUserType";
 import {CommentsDbType} from "./dbTypes/dbCommentsTypes";
-import {RefreshTDbType} from "./dbTypes/dbRefreshToken"; //env
+import {RefreshTDbType} from "./dbTypes/dbRefreshToken";
+import {BlacklistRefToken} from "./dbTypes/blackLystRefToken"; //env
 dotenv.config() //env ?init
 const mongoURI = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017'
 export const client = new MongoClient(mongoURI) //switch db
@@ -31,3 +32,5 @@ export const usersCollection = dbBlog_Post.collection<UsersDbType>('users')
 export const commentsCollection = dbBlog_Post.collection<CommentsDbType>('comments')
 //REFRESH
 export const tokenCollection = dbBlog_Post.collection<RefreshTDbType>('refreshTokens')
+
+export const tokenBLCollection = dbBlog_Post.collection<BlacklistRefToken>('blackListRefresh')
