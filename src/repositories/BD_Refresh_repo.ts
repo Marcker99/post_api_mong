@@ -8,8 +8,7 @@ export const refreshRepo = {
         return await  tokenCollection.insertOne(token)
         },
     async deactivateToken(token:string){
-         const res = await tokenBLCollection.insertOne({token:token})
-        return res
+         return tokenBLCollection.insertOne({token:token})
     },
 
     async getTokenByToken(token:string): Promise<RefreshTDbType | null>{

@@ -26,7 +26,6 @@ app.use('/comments',commentsRouter)
 //test/////////////////////////////////////////
 app.use('/testing',clearRout)
 
-app.use(commentsRouter)
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello world!') //test for vercel
 })

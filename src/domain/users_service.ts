@@ -78,9 +78,9 @@ export const UserService = {
         if(!user){
             return null
         }
-        if(!user.emailConfirmation.isConfirmed){
-            return null
-        }
+        // if(!user.emailConfirmation.isConfirmed){
+        //     return null
+        // }
 
         const userHash = await this._generateHash(password,user.accountData.salt)
         if (userHash !== user.accountData.hash){

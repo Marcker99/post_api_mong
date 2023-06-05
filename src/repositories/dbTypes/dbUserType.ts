@@ -1,7 +1,7 @@
 import {ObjectId} from "mongodb";
 
 export type UsersDbType = {
-    _id:ObjectId;
+    _id: ObjectId;
     accountData: {
         login: string;
         email: string;
@@ -17,14 +17,14 @@ export type UsersDbType = {
 }
 
 export type UsersViewType = {
-    id:string;
-    login:string;
-    email:string;
-    createdAt:string;
+    id: string;
+    login: string;
+    email: string;
+    createdAt: string;
 }
 export type UserMeViewType = {
-    login:string;
-    email:string;
-    createdAt:string;
+    login: string;
+    email: string;
+    userId: string;
 }
 
